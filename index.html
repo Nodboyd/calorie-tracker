@@ -7,35 +7,37 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&display=swap">
 <style>
 :root{--bg:#EEF2EE;--surface:#FFFFFF;--ink:#16241F;--muted:#5C6C65;--line:#D5DDD7;--go:#2E7D5B;--go-t:#CFE6DB;--mid:#D9A21B;--mid-t:#F5E6B8;--over:#C2452D;--over-t:#F3D2C9;--accent:#1F4E5F;--accent-ink:#fff;
-box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);color-scheme:light}
+padding-top:env(safe-area-inset-top,0px);color-scheme:light}
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#101815;--surface:#18231F;--ink:#E7EFEA;--muted:#9AABA3;--line:#2B3A34;--go:#52B98B;--go-t:#1F3A30;--mid:#E5B93F;--mid-t:#3D3517;--over:#E4745D;--over-t:#43231C;--accent:#7FC1D6;--accent-ink:#0E1A1E;color-scheme:dark}}
 :root[data-theme="dark"]{--bg:#101815;--surface:#18231F;--ink:#E7EFEA;--muted:#9AABA3;--line:#2B3A34;--go:#52B98B;--go-t:#1F3A30;--mid:#E5B93F;--mid-t:#3D3517;--over:#E4745D;--over-t:#43231C;--accent:#7FC1D6;--accent-ink:#0E1A1E;color-scheme:dark}
-html{scroll-padding-top:env(safe-area-inset-top,0px)}
 *,*::before,*::after{box-sizing:border-box}
 body{margin:0;background:var(--bg);color:var(--ink);font-family:"Bricolage Grotesque",system-ui,-apple-system,"Segoe UI",sans-serif;font-size:16px;line-height:1.45}
-.wrap{max-width:1280px;margin:0 auto;padding:20px 16px 56px}
-header{display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between;margin-bottom:18px}
-h1{font-size:1.6rem;font-weight:800;margin:0;letter-spacing:-.02em}
-h2{font-size:1.15rem;font-weight:600;margin:0 0 12px}
-.daynav{display:flex;gap:6px;align-items:center}
+.wrap{max-width:1280px;margin:0 auto;padding:14px 16px calc(90px + env(safe-area-inset-bottom,0px))}
+.top{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between;margin-bottom:14px}
+h1{font-size:1.35rem;font-weight:800;margin:0;letter-spacing:-.02em}
+h2{font-size:1.05rem;font-weight:600;margin:0}
+.daynav{display:flex;gap:6px;align-items:center;flex-wrap:wrap}
 button,input,select{font:inherit;color:inherit}
 button{cursor:pointer}
 .btn{background:var(--accent);color:var(--accent-ink);border:0;border-radius:10px;padding:10px 16px;font-weight:600}
 .btn.ghost{background:transparent;color:var(--ink);border:1px solid var(--line)}
 .btn.sm{padding:6px 10px;font-size:.9rem}
+.btn:disabled{opacity:.6}
 .icon{background:transparent;border:1px solid var(--line);border-radius:10px;width:40px;height:40px;font-size:1.1rem}
 input,select{background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:9px 11px;width:100%;min-width:0}
 input[type=date]{width:auto}
 :focus-visible{outline:3px solid var(--accent);outline-offset:2px}
 label{display:block;font-size:.85rem;color:var(--muted);margin-bottom:4px}
 .panel{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:18px}
-.hero{padding:22px 22px 26px;margin-bottom:16px}
-.big{display:flex;flex-wrap:wrap;gap:6px 28px;align-items:baseline;margin-bottom:22px}
-.big .n{font-size:3.6rem;font-weight:800;letter-spacing:-.04em;line-height:1}
-.big .u{color:var(--muted)}
-.stats{display:flex;gap:22px;flex-wrap:wrap;color:var(--muted)}
+.note{color:var(--muted);font-size:.88rem;margin:8px 0 0}
+.layout{display:grid;grid-template-columns:minmax(0,1fr);gap:16px}
+.col{display:grid;gap:16px;min-width:0}
+.hero{display:grid;gap:18px 32px}
+.big .n{font-size:3.4rem;font-weight:800;letter-spacing:-.04em;line-height:1}
+.hero .u{color:var(--muted);margin-top:4px}
+.stats{display:flex;gap:18px;flex-wrap:wrap;color:var(--muted);margin-top:12px;font-size:.92rem}
 .stats b{color:var(--ink);font-weight:600}
-.gauge{position:relative;margin:44px 6px 46px}
+.gauge{position:relative;margin:40px 6px 44px}
 .track{display:flex;height:16px;border-radius:8px;overflow:hidden}
 .track i{display:block;height:100%}
 .z1{background:var(--go-t)}.z2{background:var(--mid-t)}.z3{background:var(--over-t)}
@@ -43,130 +45,83 @@ label{display:block;font-size:.85rem;color:var(--muted);margin-bottom:4px}
 .pin{position:absolute;top:-8px;width:3px;height:32px;margin-left:-1.5px;background:var(--ink);border-radius:2px;transition:left .35s ease}
 .pin span{position:absolute;bottom:36px;left:50%;transform:translateX(-50%);background:var(--ink);color:var(--bg);font-size:.8rem;font-weight:600;padding:2px 8px;border-radius:8px;white-space:nowrap}
 .mark{position:absolute;top:22px;transform:translateX(-50%);font-size:.8rem;color:var(--muted);text-align:center;white-space:nowrap}
-.verdict{margin:0;font-size:1.05rem}
-.note{color:var(--muted);font-size:.88rem;margin:8px 0 0}
-.goals{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:18px;padding-top:16px;border-top:1px solid var(--line)}
-.cols{display:grid;grid-template-columns:1fr;gap:16px}
-@media (min-width:820px){.cols{grid-template-columns:1.25fr 1fr}}
-.row{display:grid;gap:10px;margin-bottom:10px}
-.r2{grid-template-columns:1fr 1fr}.r3{grid-template-columns:1.2fr 1fr 1fr}
-.preview{background:var(--bg);border-radius:10px;padding:10px 12px;margin:4px 0 12px;display:flex;justify-content:space-between;gap:10px}
-.preview b{font-size:1.15rem}
-ul{list-style:none;margin:16px 0 0;padding:0}
-li{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:10px 0;border-top:1px solid var(--line)}
-li small{display:block;color:var(--muted)}
-li .k{font-weight:600;white-space:nowrap}
-.del{background:transparent;border:0;color:var(--muted);font-size:1.2rem;padding:4px 8px}
-.empty{color:var(--muted);padding:10px 0 0}
-.data{margin-top:20px;display:flex;flex-wrap:wrap;gap:10px;align-items:center}
-#msg{color:var(--muted);font-size:.9rem}
-.more{margin:0 0 12px}
-.more summary,.tg summary{cursor:pointer;color:var(--accent);font-weight:600;margin-bottom:10px}
-.ng{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
-@media (max-width:520px){.ng{grid-template-columns:repeat(2,minmax(0,1fr))}}
-.nuts{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px}
-.nuts:not(:empty){margin-top:18px;padding-top:16px;border-top:1px solid var(--line)}
+.verdict{margin:0}
+.nuts{grid-column:1/-1;display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:14px}
+.nuts:not(:empty){padding-top:16px;border-top:1px solid var(--line)}
 .nh{display:flex;justify-content:space-between;gap:8px;font-size:.9rem;color:var(--muted)}
 .nh b{color:var(--ink);font-weight:600}
 .nb{height:8px;border-radius:4px;background:var(--line);overflow:hidden;margin-top:6px}
 .nb i{display:block;height:100%;background:var(--go);border-radius:4px}
 .nb i.o{background:var(--over)}
+ul{list-style:none;margin:8px 0 0;padding:0}
+li{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:11px 0;border-top:1px solid var(--line)}
+li small{display:block;color:var(--muted)}
+li .k{font-weight:600;white-space:nowrap}
+.del{background:transparent;border:0;color:var(--muted);font-size:1.2rem;padding:4px 8px}
+.empty{color:var(--muted)}
+.row{display:grid;gap:10px;margin-bottom:10px}
+.r2{grid-template-columns:1fr 1fr}
+.tabs{display:flex;gap:4px;background:var(--bg);padding:4px;border-radius:12px;margin:12px 0 16px}
+.tabs button{flex:1;border:0;background:transparent;border-radius:9px;padding:8px 4px;font-weight:600;color:var(--muted);font-size:.92rem}
+.tabs button[aria-selected=true]{background:var(--surface);color:var(--ink);box-shadow:0 1px 3px rgba(0,0,0,.18)}
+.sh{display:flex;justify-content:space-between;align-items:center}
+.more{margin:0 0 12px}
+.more summary,.tg summary{cursor:pointer;color:var(--accent);font-weight:600;margin-bottom:10px}
 .tg{margin-top:14px}
-.saved{margin-bottom:16px;padding-bottom:6px;border-bottom:1px solid var(--line)}
-#savedList{margin:10px 0 6px;max-height:230px;overflow-y:auto}
+.ng{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.side .ng{grid-template-columns:repeat(2,minmax(0,1fr))}
+.side .ng.three{grid-template-columns:repeat(3,minmax(0,1fr))}
+.preview{background:var(--bg);border-radius:10px;padding:10px 12px;margin:4px 0 8px;display:flex;justify-content:space-between;gap:10px}
+.preview b{font-size:1.15rem}
+.btns{display:flex;gap:10px;flex-wrap:wrap}
+#savedList{max-height:340px;overflow-y:auto;margin-top:10px}
 #savedList li{padding:8px 0}
 #savedList li>div:last-child{display:flex;align-items:center;gap:4px}
-.btns{display:flex;gap:10px;flex-wrap:wrap}
-@media (prefers-reduced-motion:reduce){.fill,.pin{transition:none}}
+.goals{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.data{margin-top:14px;display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+#msg{color:var(--muted);font-size:.9rem}
+.fab{position:fixed;right:16px;bottom:calc(16px + env(safe-area-inset-bottom,0px));z-index:10;border-radius:999px;padding:14px 22px;box-shadow:0 6px 18px rgba(0,0,0,.3)}
+.scrim{display:none}
+@media (min-width:700px){.hero{grid-template-columns:auto minmax(0,1fr);align-items:center}}
+@media (max-width:600px){.goals{grid-template-columns:1fr}.big .n{font-size:3rem}}
+@media (min-width:900px){
+  .layout{grid-template-columns:minmax(0,1fr) 400px;align-items:start}
+  .side{position:sticky;top:12px;max-height:calc(100vh - 24px);overflow:auto}
+  .fab,.sheetx{display:none}
+}
+@media (max-width:899px){
+  .side{position:fixed;left:0;right:0;bottom:0;z-index:30;max-height:88vh;overflow:auto;border-radius:18px 18px 0 0;padding-bottom:calc(18px + env(safe-area-inset-bottom,0px));transform:translateY(105%);visibility:hidden;transition:transform .25s ease,visibility .25s}
+  .side.open{transform:none;visibility:visible}
+  .scrim.open{display:block;position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:20}
+}
+@media (prefers-reduced-motion:reduce){.fill,.pin,.side{transition:none}}
 </style>
 </head>
 <body>
 <div class="wrap">
-<header>
+<header class="top">
   <h1>Calorie Keeper</h1>
   <div class="daynav">
     <button class="icon" id="prev" aria-label="Previous day">‹</button>
     <input type="date" id="date" aria-label="Day">
     <button class="icon" id="next" aria-label="Next day">›</button>
     <button class="btn ghost sm" id="todayBtn">Today</button>
+    <button class="btn ghost sm" id="setBtn" aria-expanded="false" aria-controls="settings">Settings</button>
   </div>
 </header>
-<p class="note" id="sync" role="status" style="margin:-6px 0 14px"></p>
+<p class="note" id="sync" role="status" style="margin:-6px 0 12px"></p>
  
-<section class="panel hero" aria-live="polite">
-  <div class="big"><span class="n" id="net">0</span><span class="u">net calories on <span id="dayLabel"></span></span></div>
-  <div class="gauge" id="gauge">
-    <div class="track"><i class="z1" id="z1"></i><i class="z2" id="z2"></i><i class="z3" id="z3"></i></div>
-    <div class="fill" id="fill"></div>
-    <div class="pin" id="pin"><span id="pinLbl"></span></div>
-    <div class="mark" id="mLose"></div>
-    <div class="mark" id="mMaint"></div>
-  </div>
-  <p class="verdict" id="verdict"></p>
-  <p class="note" id="lowNote"></p>
-  <div class="stats" style="margin-top:14px">
-    <span>Eaten <b id="sEaten">0</b></span>
-    <span>Workouts <b id="sEx">0</b></span>
-    <span>Credited <b id="sCred">0</b></span>
-  </div>
-  <div class="nuts" id="nuts"></div>
+<section class="panel" id="settings" hidden style="margin-bottom:16px">
+  <h2 style="margin-bottom:12px">Targets</h2>
   <div class="goals">
     <div><label for="gLose">Weight-loss target (kcal/day)</label><input id="gLose" type="number" min="0" inputmode="numeric"></div>
     <div><label for="gMaint">Maintenance ceiling (kcal/day)</label><input id="gMaint" type="number" min="0" inputmode="numeric"></div>
     <div><label for="gCred">Workout calories counted</label>
       <select id="gCred"><option value="100">All of them</option><option value="75">75%</option><option value="50">Half</option><option value="25">25%</option><option value="0">None</option></select></div>
   </div>
-  <details class="tg"><summary>Daily nutrition targets (optional)</summary><div class="ng" id="tGrid"></div></details>
   <p class="note">Watches and machines often overestimate burn, so counting only part of a workout is a safer way to lose steadily.</p>
-</section>
- 
-<div class="cols">
-  <section class="panel">
-    <h2>Food</h2>
-    <details class="tg" id="quick" style="margin:0 0 16px"><summary>Quick add (restaurant meals or anything without a label)</summary>
-      <div class="row r2"><div><label for="qName">What you ate</label><input id="qName" placeholder="Chipotle bowl" autocomplete="off"></div>
-      <div><label for="qKcal">Total calories</label><input id="qKcal" type="number" min="0" step="any" inputmode="decimal" placeholder="850"></div></div>
-      <div class="ng" style="margin-bottom:10px"><div><label for="qP">Protein (g)</label><input id="qP" type="number" min="0" step="any" inputmode="decimal"></div>
-      <div><label for="qC">Carbs (g)</label><input id="qC" type="number" min="0" step="any" inputmode="decimal"></div>
-      <div><label for="qF">Fat (g)</label><input id="qF" type="number" min="0" step="any" inputmode="decimal"></div></div>
-      <label style="display:flex;gap:8px;align-items:center;margin:0 0 12px"><input id="qSave" type="checkbox" style="width:auto"> Save to my foods for next time</label>
-      <button class="btn" id="qAdd">Add to today</button>
-      <p class="note" id="qErr" role="alert"></p>
-    </details>
-    <div class="saved">
-      <label for="sFilter">Saved foods</label>
-      <input id="sFilter" type="search" placeholder="Search your saved foods" autocomplete="off">
-      <ul id="savedList"></ul>
-    </div>
-    <div class="row"><div><label for="fName">Food</label><input id="fName" list="foodList" autocomplete="off" placeholder="Cooked rice"><datalist id="foodList"></datalist></div></div>
-    <div class="row r3">
-      <div><label for="sSize">Label serving size</label><input id="sSize" type="number" min="0" step="any" inputmode="decimal" value="100"></div>
-      <div><label for="sUnit">Unit</label><select id="sUnit"></select></div>
-      <div><label for="sKcal">Calories per serving</label><input id="sKcal" type="number" min="0" step="any" inputmode="decimal" placeholder="130"></div>
-    </div>
-    <div class="row r2">
-      <div><label for="aAmt">Amount I actually ate</label><input id="aAmt" type="number" min="0" step="any" inputmode="decimal" placeholder="250"></div>
-      <div><label for="aUnit">Unit</label><select id="aUnit"></select></div>
-    </div>
-    <details class="more"><summary>More nutrition info (optional, per label serving)</summary><div class="ng" id="nutGrid"></div></details>
-    <div class="preview"><span>Total for this entry</span><b id="calc">–</b></div>
-    <p class="note" id="calcN" style="margin:-6px 0 12px"></p>
-    <div class="btns"><button class="btn" id="addFood">Add food</button><button class="btn ghost" id="saveOnly">Save to list only</button></div>
-    <p class="note" id="foodErr" role="alert"></p>
-    <ul id="foodList2"></ul>
-  </section>
- 
-  <section class="panel">
-    <h2>Workouts</h2>
-    <div class="row"><div><label for="eName">Workout (optional)</label><input id="eName" placeholder="Evening run"></div>
-    <div><label for="eKcal">Calories burned</label><input id="eKcal" type="number" min="0" step="any" inputmode="numeric" placeholder="350"></div></div>
-    <button class="btn" id="addEx">Add workout</button>
-    <ul id="exList"></ul>
-  </section>
-</div>
- 
-<section class="panel" style="margin-top:16px">
-  <h2>Your data</h2>
+  <details class="tg"><summary>Daily nutrition targets (optional)</summary><div class="ng" id="tGrid"></div></details>
+  <h2 style="margin:22px 0 4px">Your data</h2>
   <p class="note" style="margin-top:0">This page loads calorie-data.json from the same folder every time it opens. Changes are saved in this browser right away. Click Save to GitHub to write them to your repo so every device sees them, or download the file and upload it yourself.</p>
   <div class="data">
     <button class="btn" id="ghSave">Save to GitHub</button>
@@ -182,6 +137,89 @@ li .k{font-weight:600;white-space:nowrap}
     <button class="btn ghost sm" id="ghForget">Forget token</button>
   </details>
 </section>
+ 
+<div class="layout">
+  <main class="col">
+    <section class="panel hero" aria-live="polite">
+      <div>
+        <div class="big"><span class="n" id="net">0</span></div>
+        <div class="u">net calories on <span id="dayLabel"></span></div>
+        <div class="stats"><span>Eaten <b id="sEaten">0</b></span><span>Workouts <b id="sEx">0</b></span><span>Credited <b id="sCred">0</b></span></div>
+      </div>
+      <div>
+        <div class="gauge" id="gauge">
+          <div class="track"><i class="z1" id="z1"></i><i class="z2" id="z2"></i><i class="z3" id="z3"></i></div>
+          <div class="fill" id="fill"></div>
+          <div class="pin" id="pin"><span id="pinLbl"></span></div>
+          <div class="mark" id="mLose"></div>
+          <div class="mark" id="mMaint"></div>
+        </div>
+        <p class="verdict" id="verdict"></p>
+        <p class="note" id="lowNote"></p>
+      </div>
+      <div class="nuts" id="nuts"></div>
+    </section>
+    <section class="panel">
+      <h2>Eaten</h2>
+      <ul id="foodList2"></ul>
+      <h2 style="margin-top:24px">Workouts</h2>
+      <ul id="exList"></ul>
+    </section>
+  </main>
+ 
+  <aside class="panel side" id="side" aria-label="Add entries">
+    <div class="sh"><h2>Add</h2><button class="icon sheetx" id="closeSheet" aria-label="Close">×</button></div>
+    <div class="tabs" role="tablist">
+      <button data-tab="saved" role="tab" aria-selected="true">Saved</button>
+      <button data-tab="food" role="tab" aria-selected="false">New food</button>
+      <button data-tab="quick" role="tab" aria-selected="false">Quick add</button>
+      <button data-tab="ex" role="tab" aria-selected="false">Workout</button>
+    </div>
+ 
+    <div data-pane="saved">
+      <label for="sFilter">Search your saved foods</label>
+      <input id="sFilter" type="search" placeholder="Start typing..." autocomplete="off">
+      <ul id="savedList"></ul>
+    </div>
+ 
+    <div data-pane="food" hidden>
+      <div class="row"><div><label for="fName">Food</label><input id="fName" list="foodList" autocomplete="off" placeholder="Cooked rice"><datalist id="foodList"></datalist></div></div>
+      <div class="row r2">
+        <div><label for="sSize">Label serving size</label><input id="sSize" type="number" min="0" step="any" inputmode="decimal" value="100"></div>
+        <div><label for="sUnit">Unit</label><select id="sUnit"></select></div>
+      </div>
+      <div class="row"><div><label for="sKcal">Calories per serving</label><input id="sKcal" type="number" min="0" step="any" inputmode="decimal" placeholder="130"></div></div>
+      <div class="row r2">
+        <div><label for="aAmt">Amount I actually ate</label><input id="aAmt" type="number" min="0" step="any" inputmode="decimal" placeholder="250"></div>
+        <div><label for="aUnit">Unit</label><select id="aUnit"></select></div>
+      </div>
+      <details class="more"><summary>More nutrition info (optional, per label serving)</summary><div class="ng" id="nutGrid"></div></details>
+      <div class="preview"><span>Total for this entry</span><b id="calc">–</b></div>
+      <p class="note" id="calcN" style="margin:0 0 12px"></p>
+      <div class="btns"><button class="btn" id="addFood">Add food</button><button class="btn ghost" id="saveOnly">Save to list only</button></div>
+      <p class="note" id="foodErr" role="alert"></p>
+    </div>
+ 
+    <div data-pane="quick" hidden>
+      <div class="row r2"><div><label for="qName">What you ate</label><input id="qName" placeholder="Chipotle bowl" autocomplete="off"></div>
+      <div><label for="qKcal">Total calories</label><input id="qKcal" type="number" min="0" step="any" inputmode="decimal" placeholder="850"></div></div>
+      <div class="ng three" style="margin-bottom:10px"><div><label for="qP">Protein (g)</label><input id="qP" type="number" min="0" step="any" inputmode="decimal"></div>
+      <div><label for="qC">Carbs (g)</label><input id="qC" type="number" min="0" step="any" inputmode="decimal"></div>
+      <div><label for="qF">Fat (g)</label><input id="qF" type="number" min="0" step="any" inputmode="decimal"></div></div>
+      <label style="display:flex;gap:8px;align-items:center;margin:0 0 12px"><input id="qSave" type="checkbox" style="width:auto"> Save to my foods for next time</label>
+      <button class="btn" id="qAdd">Add to today</button>
+      <p class="note" id="qErr" role="alert"></p>
+    </div>
+ 
+    <div data-pane="ex" hidden>
+      <div class="row"><div><label for="eName">Workout (optional)</label><input id="eName" placeholder="Evening run"></div>
+      <div><label for="eKcal">Calories burned</label><input id="eKcal" type="number" min="0" step="any" inputmode="numeric" placeholder="350"></div></div>
+      <button class="btn" id="addEx">Add workout</button>
+    </div>
+  </aside>
+</div>
+<button class="btn fab" id="fab">+ Add</button>
+<div class="scrim" id="scrim"></div>
 </div>
  
 <script>
@@ -253,12 +291,12 @@ $('#addFood').onclick=()=>{
   $('#foodErr').textContent='';
   S.foods[name.toLowerCase()]={name,size:parseFloat($('#sSize').value),unit:$('#sUnit').value,kcal:parseFloat($('#sKcal').value),n:readN()};
   dd().food.push({id:uid(),name,amt:parseFloat($('#aAmt').value),unit:$('#aUnit').value,kcal:t,n:scaleN(readN(),factor())});
-  save();$('#fName').value='';$('#aAmt').value='';setN(null);updCalc();renderLib();render();$('#fName').focus();
+  save();$('#fName').value='';$('#aAmt').value='';setN(null);updCalc();renderLib();render();afterAdd('fName');
 };
 $('#addEx').onclick=()=>{
   const k=parseFloat($('#eKcal').value);if(!(k>=0)||isNaN(k))return;
   dd().ex.push({id:uid(),name:$('#eName').value.trim()||'Workout',kcal:k});
-  save();$('#eName').value='';$('#eKcal').value='';render();
+  save();$('#eName').value='';$('#eKcal').value='';render();afterAdd('eName');
 };
 document.addEventListener('click',e=>{
   const b=e.target.closest('[data-del]');if(!b)return;
@@ -278,7 +316,7 @@ document.addEventListener('click',e=>{
   const u=e.target.closest('[data-use]'),x=e.target.closest('[data-forget]');
   if(u){const f=S.foods[u.dataset.use];if(!f)return;
     $('#fName').value=f.name||u.dataset.use;$('#sSize').value=f.size;$('#sUnit').value=f.unit;$('#sKcal').value=f.kcal;
-    setN(f.n);fillAmountUnits();$('#aUnit').value=f.unit;$('#aAmt').value='';updCalc();$('#foodErr').textContent='';$('#aAmt').focus();}
+    setN(f.n);fillAmountUnits();$('#aUnit').value=f.unit;$('#aAmt').value='';updCalc();$('#foodErr').textContent='';tab('food');$('#aAmt').focus();}
   if(x){delete S.foods[x.dataset.forget];save();renderLib();}
 });
 // goals
@@ -357,7 +395,7 @@ async function ghErr(r){let m='';try{m=(await r.json()).message}catch(e){}
   const h=r.status===401?'The token was rejected. It may be wrong or expired.':(r.status===403||r.status===404)?'GitHub refused it. Check the repo name and branch, and that the token has Contents read and write access to this repo.':(r.status===409||r.status===422)?'The file changed on GitHub while saving. Try again.':'';
   return new Error('GitHub error '+r.status+(m?' ('+m+')':'')+'. '+h)}
 async function ghSave(){
-  if(!GH.repo||!GH.token||!GH.path){$('#gh').open=true;say('Fill in the repository and token under GitHub saving setup first.');return}
+  if(!GH.repo||!GH.token||!GH.path){$('#gh').open=true;openSettings();say('Fill in the repository and token under GitHub saving setup first.');return}
   const url='https://api.github.com/repos/'+GH.repo+'/contents/'+GH.path.split('/').map(encodeURIComponent).join('/');
   const hdr={Authorization:'Bearer '+GH.token,Accept:'application/vnd.github+json','X-GitHub-Api-Version':'2022-11-28'};
   const btn=$('#ghSave');btn.disabled=true;say('Saving to GitHub…');
@@ -387,8 +425,20 @@ $('#qAdd').onclick=()=>{
   dd().food.push({id:uid(),name,amt:1,unit:'each',kcal:kc,n,quick:1});
   if($('#qSave').checked)S.foods[name.toLowerCase()]={name,size:1,unit:'each',kcal:kc,n};
   save();['qName','qKcal','qP','qC','qF'].forEach(id=>{$('#'+id).value=''});$('#qSave').checked=false;$('#qErr').textContent='';
-  renderLib();render();$('#qName').focus();
+  renderLib();render();afterAdd('qName');
 };
+function openSettings(){$('#settings').hidden=false;$('#setBtn').setAttribute('aria-expanded','true')}
+$('#setBtn').onclick=()=>{const p=$('#settings');p.hidden=!p.hidden;$('#setBtn').setAttribute('aria-expanded',String(!p.hidden))};
+function tab(n){
+  document.querySelectorAll('[data-tab]').forEach(b=>b.setAttribute('aria-selected',String(b.dataset.tab===n)));
+  document.querySelectorAll('[data-pane]').forEach(p=>{p.hidden=p.dataset.pane!==n});
+}
+document.querySelectorAll('[data-tab]').forEach(b=>{b.onclick=()=>tab(b.dataset.tab)});
+function openSheet(){$('#side').classList.add('open');$('#scrim').classList.add('open')}
+function closeSheet(){$('#side').classList.remove('open');$('#scrim').classList.remove('open')}
+$('#fab').onclick=openSheet;$('#scrim').onclick=closeSheet;$('#closeSheet').onclick=closeSheet;
+const afterAdd=id=>{if(matchMedia('(max-width:899px)').matches)closeSheet();else{const el=$('#'+id);if(el)el.focus()}};
+tab(Object.keys(S.foods).length?'saved':'food');
 async function boot(){
   const sync=$('#sync');
   try{
