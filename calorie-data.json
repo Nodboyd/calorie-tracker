@@ -106,9 +106,14 @@
           "id": "mwsc1ezjpk7o",
           "name": "Morning Strength Training",
           "kcal": 350
+        },
+        {
+          "id": "mwsfb6tprc9a",
+          "name": "Evening Walk",
+          "kcal": 200
         }
       ]
     }
   },
-  "updated": 1795384730297
+  "updated": 1795387414093
 }
