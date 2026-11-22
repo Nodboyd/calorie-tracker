@@ -1,6 +1,113 @@
 {
-  "updated": 0,
-  "goals": { "lose": 2000, "maint": 2500, "cred": 100, "t": {} },
-  "foods": {},
-  "days": {}
+  "goals": {
+    "lose": 2200,
+    "maint": 2500,
+    "cred": 50,
+    "t": {}
+  },
+  "foods": {
+    "chicken thighs (sams club)": {
+      "name": "Chicken Thighs (Sams Club)",
+      "size": 4,
+      "unit": "oz",
+      "kcal": 140
+    },
+    "chicken wings (sams club)": {
+      "name": "Chicken Wings (Sams Club)",
+      "size": 4,
+      "unit": "oz",
+      "kcal": 210,
+      "n": {
+        "p": 20,
+        "c": 0,
+        "f": 14,
+        "fi": 0,
+        "su": 0,
+        "na": 95
+      }
+    },
+    "orgain chocolate peanut butter protein powder": {
+      "name": "Orgain Chocolate Peanut butter Protein Powder",
+      "size": 46,
+      "unit": "g",
+      "kcal": 160,
+      "n": {
+        "p": 21,
+        "c": 15,
+        "f": 4.5,
+        "fi": 6,
+        "su": 1
+      }
+    },
+    "signature select white rice": {
+      "name": "Signature Select White Rice",
+      "size": 45,
+      "unit": "g",
+      "kcal": 160,
+      "n": {
+        "p": 3,
+        "c": 36,
+        "f": 0,
+        "fi": 0,
+        "su": 0,
+        "na": 10
+      }
+    },
+    "oat milk (sams club)": {
+      "name": "Oat Milk (Sams Club)",
+      "size": 1,
+      "unit": "cup",
+      "kcal": 90,
+      "n": {
+        "p": 1,
+        "c": 16,
+        "f": 3,
+        "fi": 2,
+        "su": 6,
+        "na": 100
+      }
+    }
+  },
+  "days": {
+    "2026-11-22": {
+      "food": [
+        {
+          "id": "mwscx9gzrpqx",
+          "name": "Orgain Chocolate Peanut butter Protein Powder",
+          "amt": 46,
+          "unit": "g",
+          "kcal": 160,
+          "n": {
+            "p": 21,
+            "c": 15,
+            "f": 4.5,
+            "fi": 6,
+            "su": 1
+          }
+        },
+        {
+          "id": "mwscyh041x8g",
+          "name": "Chicken Wings (Sams Club)",
+          "amt": 16.2,
+          "unit": "oz",
+          "kcal": 850.5,
+          "n": {
+            "p": 81,
+            "c": 0,
+            "f": 56.699999999999996,
+            "fi": 0,
+            "su": 0,
+            "na": 384.75
+          }
+        }
+      ],
+      "ex": [
+        {
+          "id": "mwsc1ezjpk7o",
+          "name": "Morning Strength Training",
+          "kcal": 350
+        }
+      ]
+    }
+  }
 }
