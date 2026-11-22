@@ -123,6 +123,16 @@ li .k{font-weight:600;white-space:nowrap}
 <div class="cols">
   <section class="panel">
     <h2>Food</h2>
+    <details class="tg" id="quick" style="margin:0 0 16px"><summary>Quick add (restaurant meals or anything without a label)</summary>
+      <div class="row r2"><div><label for="qName">What you ate</label><input id="qName" placeholder="Chipotle bowl" autocomplete="off"></div>
+      <div><label for="qKcal">Total calories</label><input id="qKcal" type="number" min="0" step="any" inputmode="decimal" placeholder="850"></div></div>
+      <div class="ng" style="margin-bottom:10px"><div><label for="qP">Protein (g)</label><input id="qP" type="number" min="0" step="any" inputmode="decimal"></div>
+      <div><label for="qC">Carbs (g)</label><input id="qC" type="number" min="0" step="any" inputmode="decimal"></div>
+      <div><label for="qF">Fat (g)</label><input id="qF" type="number" min="0" step="any" inputmode="decimal"></div></div>
+      <label style="display:flex;gap:8px;align-items:center;margin:0 0 12px"><input id="qSave" type="checkbox" style="width:auto"> Save to my foods for next time</label>
+      <button class="btn" id="qAdd">Add to today</button>
+      <p class="note" id="qErr" role="alert"></p>
+    </details>
     <div class="saved">
       <label for="sFilter">Saved foods</label>
       <input id="sFilter" type="search" placeholder="Search your saved foods" autocomplete="off">
@@ -305,7 +315,7 @@ function render(){
   else v=`${r0(net-maint)} kcal over your maintenance ceiling, which would put you in a surplus today.`;
   $('#verdict').textContent=v;
   $('#lowNote').textContent=(net<1200&&eaten>0)?'Net intake this low is hard to sustain. Make sure you’re eating enough to fuel your workouts.':'';
-  $('#foodList2').innerHTML=d.food.length?d.food.map(x=>`<li><div>${esc(x.name)}<small>${+x.amt.toFixed(2)} ${U[x.unit].l}${macroStr(x.n)}</small></div><div><span class="k">${r0(x.kcal)} kcal</span><button class="del" data-del="food:${x.id}" aria-label="Remove ${esc(x.name)}">×</button></div></li>`).join(''):'<li class="empty" style="border:0;padding-left:0">Nothing logged yet. Add the first food above.</li>';
+  $('#foodList2').innerHTML=d.food.length?d.food.map(x=>`<li><div>${esc(x.name)}<small>${x.quick?'Quick add':(+x.amt.toFixed(2))+' '+U[x.unit].l}${macroStr(x.n)}</small></div><div><span class="k">${r0(x.kcal)} kcal</span><button class="del" data-del="food:${x.id}" aria-label="Remove ${esc(x.name)}">×</button></div></li>`).join(''):'<li class="empty" style="border:0;padding-left:0">Nothing logged yet. Add the first food above.</li>';
   $('#exList').innerHTML=d.ex.length?d.ex.map(x=>`<li><div>${esc(x.name)}</div><div><span class="k">−${r0(x.kcal)} kcal</span><button class="del" data-del="ex:${x.id}" aria-label="Remove ${esc(x.name)}">×</button></div></li>`).join(''):'<li class="empty" style="border:0;padding-left:0">No workouts logged for this day.</li>';
 }
  
@@ -370,6 +380,15 @@ async function ghSave(){
   finally{btn.disabled=false}
 }
 $('#ghSave').onclick=ghSave;
+$('#qAdd').onclick=()=>{
+  const name=$('#qName').value.trim()||'Quick add',kc=parseFloat($('#qKcal').value);
+  if(isNaN(kc)||kc<0){$('#qErr').textContent='Enter the total calories.';return}
+  const n={};[['p','qP'],['c','qC'],['f','qF']].forEach(([k,id])=>{const v=parseFloat($('#'+id).value);if(!isNaN(v)&&v>=0)n[k]=v});
+  dd().food.push({id:uid(),name,amt:1,unit:'each',kcal:kc,n,quick:1});
+  if($('#qSave').checked)S.foods[name.toLowerCase()]={name,size:1,unit:'each',kcal:kc,n};
+  save();['qName','qKcal','qP','qC','qF'].forEach(id=>{$('#'+id).value=''});$('#qSave').checked=false;$('#qErr').textContent='';
+  renderLib();render();$('#qName').focus();
+};
 async function boot(){
   const sync=$('#sync');
   try{
