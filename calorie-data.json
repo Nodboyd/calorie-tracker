@@ -10,7 +10,8 @@
       "name": "Chicken Thighs (Sams Club)",
       "size": 4,
       "unit": "oz",
-      "kcal": 140
+      "kcal": 140,
+      "n": {}
     },
     "chicken wings (sams club)": {
       "name": "Chicken Wings (Sams Club)",
@@ -196,6 +197,38 @@
             "su": 21.93953488372093,
             "na": 2.0953488372093023
           }
+        },
+        {
+          "id": "mwsitil4zeak",
+          "name": "Signature Select White Rice",
+          "amt": 170,
+          "unit": "g",
+          "kcal": 604.4444444444445,
+          "n": {
+            "p": 11.333333333333332,
+            "c": 136,
+            "f": 0,
+            "fi": 0,
+            "su": 0,
+            "na": 37.77777777777778
+          }
+        },
+        {
+          "id": "mwsiwah6qfk7",
+          "name": "Chicken Thighs (Sams Club)",
+          "amt": 6.5,
+          "unit": "oz",
+          "kcal": 227.5,
+          "n": {}
+        },
+        {
+          "id": "mwsj3lp2nr53",
+          "name": "MIxed Veggies",
+          "amt": 1,
+          "unit": "each",
+          "kcal": 50,
+          "n": {},
+          "quick": 1
         }
       ],
       "ex": [
@@ -212,5 +245,5 @@
       ]
     }
   },
-  "updated": 1795393097738
+  "updated": 1795393778582
 }
