@@ -423,6 +423,21 @@
             "su": 5.581818181818182,
             "na": 0
           }
+        },
+        {
+          "id": "mwtx2xptsqvp",
+          "name": "Earthbound Farm Organic Broccoli Florets",
+          "amt": 181,
+          "unit": "g",
+          "kcal": 74.52941176470588,
+          "n": {
+            "p": 4.258823529411765,
+            "c": 12.776470588235295,
+            "f": 0,
+            "fi": 4.258823529411765,
+            "su": 2.1294117647058823,
+            "na": 63.88235294117647
+          }
         }
       ],
       "ex": [
@@ -436,5 +451,5 @@
       "note": "5:00am wake up would he harder if it wasn't for Chester needing to pee.\n\nHard to want to workout but was able to get there to do arms chest and back stuff this morning.\n\n Early start to the work day next.\n\nMid day, work is going good. Hungry but not starving, would rather have a big dinner than small lunch and medium dinner at this point, but am feeling snackish."
     }
   },
-  "updated": 1795477611260
+  "updated": 1795477728305
 }
