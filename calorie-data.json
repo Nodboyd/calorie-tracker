@@ -178,6 +178,20 @@
         "su": 0,
         "na": 360
       }
+    },
+    "canned chicken (sams club)": {
+      "name": "Canned Chicken (Sams Club)",
+      "size": 84,
+      "unit": "g",
+      "kcal": 90,
+      "n": {
+        "p": 19,
+        "c": 0,
+        "f": 1.5,
+        "fi": 0,
+        "su": 0,
+        "na": 360
+      }
     }
   },
   "days": {
@@ -334,5 +348,5 @@
       "note": "5:00am wake up would he harder if it wasn't for Chester needing to pee.\n\nHard to want to workout but was able to get there to do arms chest and back stuff this morning.\n\n Early start to the work day next."
     }
   },
-  "updated": 1795447096609
+  "updated": 1795447184535
 }
