@@ -244,19 +244,6 @@
           "unit": "each",
           "kcal": 180,
           "n": {}
-        },
-        {
-          "id": "mwslhi8uuyvc",
-          "name": "Sweet Potato",
-          "amt": 0,
-          "unit": "g",
-          "kcal": 0,
-          "n": {
-            "p": 0,
-            "c": 0,
-            "f": 0,
-            "fi": 0
-          }
         }
       ],
       "ex": [
@@ -273,5 +260,5 @@
       ]
     }
   },
-  "updated": 1795397786526
+  "updated": 1795397792823
 }
