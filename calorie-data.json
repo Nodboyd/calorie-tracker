@@ -22,8 +22,8 @@
     },
     "chicken wings (sams club)": {
       "name": "Chicken Wings (Sams Club)",
-      "size": 4,
-      "unit": "oz",
+      "size": 112,
+      "unit": "g",
       "kcal": 210,
       "n": {
         "p": 20,
@@ -364,6 +364,21 @@
             "su": 20.28372093023256,
             "na": 1.9372093023255814
           }
+        },
+        {
+          "id": "mwtwxlbcpz63",
+          "name": "Chicken Wings (Sams Club)",
+          "amt": 443,
+          "unit": "g",
+          "kcal": 830.625,
+          "n": {
+            "p": 79.10714285714286,
+            "c": 0,
+            "f": 55.375,
+            "fi": 0,
+            "su": 0,
+            "na": 375.75892857142856
+          }
         }
       ],
       "ex": [
@@ -377,5 +392,5 @@
       "note": "5:00am wake up would he harder if it wasn't for Chester needing to pee.\n\nHard to want to workout but was able to get there to do arms chest and back stuff this morning.\n\n Early start to the work day next.\n\nMid day, work is going good. Hungry but not starving, would rather have a big dinner than small lunch and medium dinner at this point, but am feeling snackish."
     }
   },
-  "updated": 1795466889800
+  "updated": 1795477478953
 }
