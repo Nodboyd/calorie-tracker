@@ -112,7 +112,7 @@ li .k{font-weight:600;white-space:nowrap}
   </div>
 </header>
 <p class="note" id="sync" role="status" style="margin:-6px 0 12px"></p>
- 
+
 <section class="panel" id="settings" hidden style="margin-bottom:16px">
   <h2 style="margin-bottom:12px">Targets</h2>
   <div class="goals">
@@ -135,11 +135,12 @@ li .k{font-weight:600;white-space:nowrap}
   <details class="tg" id="gh"><summary>GitHub saving setup</summary>
     <div class="row r2"><div><label for="ghRepo">Repository (owner/name)</label><input id="ghRepo" placeholder="yourname/calorie-tracker" autocomplete="off" spellcheck="false"></div><div><label for="ghBranch">Branch</label><input id="ghBranch" autocomplete="off" spellcheck="false"></div></div>
     <div class="row r2"><div><label for="ghPath">Data file</label><input id="ghPath" autocomplete="off" spellcheck="false"></div><div><label for="ghToken">Access token</label><input id="ghToken" type="password" autocomplete="off" placeholder="github_pat_..."></div></div>
+    <label style="display:flex;gap:8px;align-items:center;margin:0 0 10px;color:var(--ink);font-size:1rem"><input id="ghAuto" type="checkbox" style="width:auto"> Sync to GitHub automatically after every change</label>
     <p class="note">The token stays in this browser only. It is never put in the data file or the repo. Use a fine-grained token limited to this one repo with Contents set to read and write.</p>
     <button class="btn ghost sm" id="ghForget">Forget token</button>
   </details>
 </section>
- 
+
 <div class="layout">
   <main class="col">
     <section class="panel hero" aria-live="polite">
@@ -166,7 +167,7 @@ li .k{font-weight:600;white-space:nowrap}
       <section class="panel"><h2>Workouts</h2><ul id="exList"></ul></section>
     </div>
   </main>
- 
+
   <aside class="panel side" id="side" aria-label="Add entries">
     <div class="sh"><h2>Add</h2><button class="icon sheetx" id="closeSheet" aria-label="Close">×</button></div>
     <div class="tabs" role="tablist">
@@ -175,13 +176,13 @@ li .k{font-weight:600;white-space:nowrap}
       <button data-tab="quick" role="tab" aria-selected="false">Quick add</button>
       <button data-tab="ex" role="tab" aria-selected="false">Workout</button>
     </div>
- 
+
     <div data-pane="saved">
       <label for="sFilter">Search your saved foods</label>
       <input id="sFilter" type="search" placeholder="Start typing..." autocomplete="off">
       <ul id="savedList"></ul>
     </div>
- 
+
     <div data-pane="food" hidden>
       <div class="row"><div><label for="fName">Food</label><input id="fName" list="foodList" autocomplete="off" placeholder="Cooked rice"><datalist id="foodList"></datalist></div></div>
       <div class="row r2">
@@ -199,7 +200,7 @@ li .k{font-weight:600;white-space:nowrap}
       <div class="btns"><button class="btn" id="addFood">Add food</button><button class="btn ghost" id="saveOnly">Save to list only</button></div>
       <p class="note" id="foodErr" role="alert"></p>
     </div>
- 
+
     <div data-pane="quick" hidden>
       <div class="row r2"><div><label for="qName">What you ate</label><input id="qName" placeholder="Chipotle bowl" autocomplete="off"></div>
       <div><label for="qKcal">Total calories</label><input id="qKcal" type="number" min="0" step="any" inputmode="decimal" placeholder="850"></div></div>
@@ -210,7 +211,7 @@ li .k{font-weight:600;white-space:nowrap}
       <button class="btn" id="qAdd">Add to today</button>
       <p class="note" id="qErr" role="alert"></p>
     </div>
- 
+
     <div data-pane="ex" hidden>
       <div class="row"><div><label for="eName">Workout (optional)</label><input id="eName" placeholder="Evening run"></div>
       <div><label for="eKcal">Calories burned</label><input id="eKcal" type="number" min="0" step="any" inputmode="numeric" placeholder="350"></div></div>
@@ -221,7 +222,7 @@ li .k{font-weight:600;white-space:nowrap}
 <button class="btn fab" id="fab">+ Add</button>
 <div class="scrim" id="scrim"></div>
 </div>
- 
+
 <script>
 const KEY='calorie-keeper-v1';
 const U={g:{l:'grams (g)',f:'w',k:1},oz:{l:'ounces (oz)',f:'w',k:28.3495},lb:{l:'pounds (lb)',f:'w',k:453.592},kg:{l:'kilograms (kg)',f:'w',k:1000},
@@ -235,11 +236,13 @@ const ymd=d=>d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+Stri
 const norm=o=>{const x={goals:Object.assign({lose:2000,maint:2500,cred:100},(o&&o.goals)||{}),foods:(o&&o.foods)||{},days:(o&&o.days)||{}};x.goals.t=Object.assign({},x.goals.t);x.updated=(o&&o.updated)||0;return x};
 function load(){try{const r=localStorage.getItem(KEY);if(r)return norm(JSON.parse(r))}catch(e){}return norm({})}
 function persist(){try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}}
-function save(){S.updated=Date.now();persist();const sy=document.querySelector('#sync');if(sy)sy.textContent='Unsaved changes. Use Save to GitHub in Settings to keep them.'}
+function save(){S.updated=Date.now();persist();const sy=document.querySelector('#sync');
+  if(autoOn()){if(sy)sy.textContent='Saving to GitHub…';ghQueue()}
+  else if(sy)sy.textContent='Unsaved changes. Use Save to GitHub in Settings to keep them.'}
 let S=load(),day=ymd(new Date());
 const dd=()=>S.days[day]||(S.days[day]={food:[],ex:[]});
 const uid=()=>Date.now().toString(36)+Math.random().toString(36).slice(2,6);
- 
+
 const N=[{k:'p',l:'Protein',u:'g'},{k:'c',l:'Carbs',u:'g'},{k:'f',l:'Fat',u:'g'},{k:'fi',l:'Fiber',u:'g'},{k:'su',l:'Sugar',u:'g',lim:1},{k:'na',l:'Sodium',u:'mg',lim:1}];
 $('#nutGrid').innerHTML=N.map(d=>`<div><label for="n_${d.k}">${d.l} (${d.u})</label><input id="n_${d.k}" type="number" min="0" step="any" inputmode="decimal"></div>`).join('');
 $('#tGrid').innerHTML=N.map(d=>`<div><label for="t_${d.k}">${d.l} ${d.lim?'limit':'goal'} (${d.u})</label><input id="t_${d.k}" type="number" min="0" step="any" inputmode="decimal"></div>`).join('');
@@ -277,14 +280,14 @@ function renderLib(){
   $('#savedList').innerHTML=shown.length?shown.map(k=>{const f=S.foods[k];
     return `<li><div>${esc(f.name||k)}<small>${r0(f.kcal)} kcal per ${+f.size} ${SH[f.unit]||''}${macroStr(f.n)}</small></div><div><button class="btn ghost sm" data-use="${esc(k)}">Use</button><button class="del" data-forget="${esc(k)}" aria-label="Remove ${esc(f.name||k)} from saved foods">×</button></div></li>`}).join(''):`<li class="empty" style="border:0;padding-left:0">${keys.length?'No saved foods match that search.':'Foods you add will be saved here so you only enter them once.'}</li>`;
 }
- 
+
 $('#fName').addEventListener('input',()=>{
   const f=S.foods[$('#fName').value.trim().toLowerCase()];
   if(f){$('#sSize').value=f.size;$('#sUnit').value=f.unit;$('#sKcal').value=f.kcal;setN(f.n);fillAmountUnits();updCalc()}
 });
 $('#sUnit').addEventListener('change',()=>{fillAmountUnits();updCalc()});
 ['#sSize','#sKcal','#aAmt','#aUnit'].forEach(s=>$(s).addEventListener('input',updCalc));
- 
+
 $('#addFood').onclick=()=>{
   const name=$('#fName').value.trim(),t=calc();
   if(!name||t===null){$('#foodErr').textContent='Enter a food name, its label serving and calories, and how much you ate.';return}
@@ -303,7 +306,7 @@ document.addEventListener('click',e=>{
   const [kind,id]=b.dataset.del.split(':');const d=dd();
   d[kind]=d[kind].filter(x=>x.id!==id);save();render();
 });
- 
+
 $('#sFilter').addEventListener('input',renderLib);
 $('#saveOnly').onclick=()=>{
   const name=$('#fName').value.trim(),size=parseFloat($('#sSize').value),kc=parseFloat($('#sKcal').value);
@@ -322,13 +325,13 @@ document.addEventListener('click',e=>{
 // goals
 $('#gLose').value=S.goals.lose;$('#gMaint').value=S.goals.maint;$('#gCred').value=S.goals.cred;
 [['#gLose','lose'],['#gMaint','maint'],['#gCred','cred']].forEach(([s,k])=>$(s).addEventListener('input',()=>{S.goals[k]=parseFloat($(s).value)||0;save();render()}));
- 
+
 // date nav
 function shift(n){const d=new Date(day+'T12:00:00');d.setDate(d.getDate()+n);day=ymd(d);render()}
 $('#prev').onclick=()=>shift(-1);$('#next').onclick=()=>shift(1);
 $('#todayBtn').onclick=()=>{day=ymd(new Date());render()};
 $('#date').onchange=e=>{if(e.target.value){day=e.target.value;render()}};
- 
+
 function render(){
   const d=S.days[day]||{food:[],ex:[]},g=S.goals;
   const eaten=d.food.reduce((a,x)=>a+x.kcal,0),burn=d.ex.reduce((a,x)=>a+x.kcal,0),cred=burn*g.cred/100;
@@ -356,7 +359,7 @@ function render(){
   $('#foodList2').innerHTML=d.food.length?d.food.map(x=>`<li><div>${esc(x.name)}<small>${x.quick?'Quick add':(+x.amt.toFixed(2))+' '+U[x.unit].l}${macroStr(x.n)}</small></div><div><span class="k">${r0(x.kcal)} kcal</span><button class="del" data-del="food:${x.id}" aria-label="Remove ${esc(x.name)}">×</button></div></li>`).join(''):'<li class="empty" style="border:0;padding-left:0">Nothing logged yet. Add the first food above.</li>';
   $('#exList').innerHTML=d.ex.length?d.ex.map(x=>`<li><div>${esc(x.name)}</div><div><span class="k">−${r0(x.kcal)} kcal</span><button class="del" data-del="ex:${x.id}" aria-label="Remove ${esc(x.name)}">×</button></div></li>`).join(''):'<li class="empty" style="border:0;padding-left:0">No workouts logged for this day.</li>';
 }
- 
+
 // backup + restore
 const say=t=>{$('#msg').textContent=t};
 $('#exp').onclick=()=>{
@@ -381,9 +384,9 @@ $('#imp').onchange=e=>{
   };
   r.readAsText(f);
 };
- 
+
 const GHKEY='calorie-keeper-gh';
-const GH={repo:'',branch:'main',path:'calorie-data.json',token:''};
+const GH={repo:'',branch:'main',path:'calorie-data.json',token:'',auto:true};
 try{Object.assign(GH,JSON.parse(localStorage.getItem(GHKEY)||'{}'))}catch(e){}
 if(!GH.repo){const m=location.hostname.match(/^([^.]+)\.github\.io$/),p=location.pathname.split('/')[1];if(m)GH.repo=m[1]+'/'+((p&&!/\.html?$/.test(p))?p:m[0])}
 const GHF={ghRepo:'repo',ghBranch:'branch',ghPath:'path',ghToken:'token'};
@@ -393,31 +396,43 @@ const b64=t=>btoa(unescape(encodeURIComponent(t)));
 const ub64=t=>decodeURIComponent(escape(atob(t.replace(/\s/g,''))));
 async function ghErr(r){let m='';try{m=(await r.json()).message}catch(e){}
   const h=r.status===401?'The token was rejected. It may be wrong or expired.':(r.status===403||r.status===404)?'GitHub refused it. Check the repo name and branch, and that the token has Contents read and write access to this repo.':(r.status===409||r.status===422)?'The file changed on GitHub while saving. Try again.':'';
-  return new Error('GitHub error '+r.status+(m?' ('+m+')':'')+'. '+h)}
-async function ghSave(){
-  if(!GH.repo||!GH.token||!GH.path){$('#gh').open=true;openSettings();say('Fill in the repository and token under GitHub saving setup first.');return}
+  const er=new Error('GitHub error '+r.status+(m?' ('+m+')':'')+'. '+h);er.status=r.status;return er}
+let ghBusy=false,ghAgain=false,ghTimer=null,ghBase=null;
+const autoOn=()=>!!(GH.auto&&GH.repo&&GH.token&&GH.path);
+function ghQueue(){if(!autoOn())return;clearTimeout(ghTimer);ghTimer=setTimeout(()=>ghSave(true),700)}
+async function ghSave(silent){
+  if(!GH.repo||!GH.token||!GH.path){if(!silent){$('#gh').open=true;openSettings();say('Fill in the repository and token under GitHub saving setup first.')}return}
+  if(ghBusy){ghAgain=true;return}
+  ghBusy=true;
+  const btn=$('#ghSave'),out=t=>{if(silent)$('#sync').textContent=t;else{say(t);$('#sync').textContent=''}};
   const url='https://api.github.com/repos/'+GH.repo+'/contents/'+GH.path.split('/').map(encodeURIComponent).join('/');
   const hdr={Authorization:'Bearer '+GH.token,Accept:'application/vnd.github+json','X-GitHub-Api-Version':'2022-11-28'};
-  const btn=$('#ghSave');btn.disabled=true;say('Saving to GitHub…');
+  btn.disabled=true;out('Saving to GitHub…');
   try{
     let sha;
     const g=await fetch(url+'?ref='+encodeURIComponent(GH.branch||'main'),{headers:hdr,cache:'no-store'});
     if(g.ok){
       const f=await g.json();sha=f.sha;
-      try{const remote=JSON.parse(ub64(f.content));
-        if((remote.updated||0)>(S.updated||0)){say('GitHub has newer data, probably saved from another device. Reload the page to load it, or download your changes first so they aren’t lost.');return}
-      }catch(e){}
+      let ru=null;try{ru=(JSON.parse(ub64(f.content)).updated)||0}catch(e){}
+      const stale=ru!==null&&(ghBase===null?ru>(S.updated||0):ru!==ghBase);
+      if(stale){out('GitHub has newer data from another device or browser, so saving is paused to avoid overwriting it. Download your changes if you want to keep them, then reload the page to load the newer data.');return}
     }else if(g.status!==404){throw await ghErr(g)}
     S.updated=S.updated||Date.now();persist();
+    const wrote=S.updated;
     const body={message:'Update calorie data '+new Date().toISOString().slice(0,16).replace('T',' '),content:b64(JSON.stringify(S,null,2)+'\n'),branch:GH.branch||'main'};
     if(sha)body.sha=sha;
     const p=await fetch(url,{method:'PUT',headers:Object.assign({'Content-Type':'application/json'},hdr),body:JSON.stringify(body)});
     if(!p.ok)throw await ghErr(p);
-    $('#sync').textContent='';say('Saved to GitHub. The live site can take a minute or two to show it.');
-  }catch(e){say(e&&e.message?e.message:'Couldn’t reach GitHub.')}
-  finally{btn.disabled=false}
+    ghBase=wrote;
+    if(!ghAgain)out('Synced to GitHub at '+new Date().toLocaleTimeString([],{hour:'numeric',minute:'2-digit'})+'.');
+  }catch(e){
+    if(e&&(e.status===409||e.status===422)&&silent)ghAgain=true;
+    else out(e&&e.message?e.message:'Couldn’t reach GitHub.');
+  }finally{btn.disabled=false;ghBusy=false;if(ghAgain){ghAgain=false;ghQueue()}}
 }
-$('#ghSave').onclick=ghSave;
+$('#ghSave').onclick=()=>ghSave(false);
+$('#ghAuto').checked=GH.auto!==false;
+$('#ghAuto').onchange=()=>{GH.auto=$('#ghAuto').checked;try{localStorage.setItem(GHKEY,JSON.stringify(GH))}catch(e){}};
 $('#qAdd').onclick=()=>{
   const name=$('#qName').value.trim()||'Quick add',kc=parseFloat($('#qKcal').value);
   if(isNaN(kc)||kc<0){$('#qErr').textContent='Enter the total calories.';return}
@@ -446,8 +461,8 @@ async function boot(){
     if(!r.ok)throw new Error(r.status);
     const o=await r.json();
     if(!o||typeof o!=='object'||typeof o.days!=='object')throw new Error('bad');
-    const remote=norm(o);
-    if(S.updated>remote.updated){sync.textContent='You have changes in this browser that aren’t on GitHub yet. Use Save to GitHub in Settings to keep them.';return}
+    const remote=norm(o);ghBase=remote.updated;
+    if(S.updated>remote.updated){if(autoOn()){sync.textContent='Saving your unsynced changes to GitHub…';ghQueue()}else sync.textContent='You have changes in this browser that aren’t on GitHub yet. Use Save to GitHub in Settings to keep them.';return}
     S=remote;persist();
     $('#gLose').value=S.goals.lose;$('#gMaint').value=S.goals.maint;$('#gCred').value=S.goals.cred;
     setT();renderLib();render();
@@ -458,4 +473,3 @@ boot();
 </script>
 </body>
 </html>
- 
