@@ -206,6 +206,20 @@
         "su": 0,
         "na": 95
       }
+    },
+    "buffalo wild wings medium sauce": {
+      "name": "Buffalo Wild Wings Medium Sauce",
+      "size": 32,
+      "unit": "g",
+      "kcal": 30,
+      "n": {
+        "p": 2,
+        "c": 19,
+        "f": 0,
+        "fi": 1,
+        "su": 1,
+        "na": 0
+      }
     }
   },
   "days": {
@@ -379,6 +393,21 @@
             "su": 0,
             "na": 375.75892857142856
           }
+        },
+        {
+          "id": "mwtwz2yrx0o8",
+          "name": "Buffalo Wild Wings Medium Sauce",
+          "amt": 64,
+          "unit": "g",
+          "kcal": 60,
+          "n": {
+            "p": 4,
+            "c": 38,
+            "f": 0,
+            "fi": 2,
+            "su": 2,
+            "na": 0
+          }
         }
       ],
       "ex": [
@@ -392,5 +421,5 @@
       "note": "5:00am wake up would he harder if it wasn't for Chester needing to pee.\n\nHard to want to workout but was able to get there to do arms chest and back stuff this morning.\n\n Early start to the work day next.\n\nMid day, work is going good. Hungry but not starving, would rather have a big dinner than small lunch and medium dinner at this point, but am feeling snackish."
     }
   },
-  "updated": 1795477478953
+  "updated": 1795477548484
 }
