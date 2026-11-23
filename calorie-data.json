@@ -11,7 +11,14 @@
       "size": 4,
       "unit": "oz",
       "kcal": 140,
-      "n": {}
+      "n": {
+        "p": 22,
+        "c": 0,
+        "f": 4.5,
+        "fi": 0,
+        "su": 0,
+        "na": 105
+      }
     },
     "chicken wings (sams club)": {
       "name": "Chicken Wings (Sams Club)",
@@ -306,5 +313,5 @@
       "note": "5:00am wake up would he harder if it wasn't for Chester needing to pee.\n\nHard to want to workout but was able to get there to do arms chest and back stuff this morning.\n\n Early start to the work day next."
     }
   },
-  "updated": 1795440307905
+  "updated": 1795441665959
 }
