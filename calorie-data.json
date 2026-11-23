@@ -349,6 +349,21 @@
             "su": 0.9565217391304348,
             "na": 382.60869565217394
           }
+        },
+        {
+          "id": "mwtphq0cgbwq",
+          "name": "Gala Apple",
+          "amt": 196,
+          "unit": "g",
+          "kcal": 111.67441860465117,
+          "n": {
+            "p": 0.49,
+            "c": 26.77906976744186,
+            "f": 0.23930232558139536,
+            "fi": 4.558139534883721,
+            "su": 20.28372093023256,
+            "na": 1.9372093023255814
+          }
         }
       ],
       "ex": [
@@ -362,5 +377,5 @@
       "note": "5:00am wake up would he harder if it wasn't for Chester needing to pee.\n\nHard to want to workout but was able to get there to do arms chest and back stuff this morning.\n\n Early start to the work day next."
     }
   },
-  "updated": 1795447262639
+  "updated": 1795464981228
 }
