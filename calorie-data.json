@@ -164,6 +164,20 @@
       "unit": "each",
       "kcal": 180,
       "n": {}
+    },
+    "can of tuna (starkist)": {
+      "name": "Can of Tuna (StarKist)",
+      "size": 1,
+      "unit": "each",
+      "kcal": 90,
+      "n": {
+        "p": 20,
+        "c": 0,
+        "f": 0.5,
+        "fi": 0,
+        "su": 0,
+        "na": 360
+      }
     }
   },
   "days": {
@@ -320,5 +334,5 @@
       "note": "5:00am wake up would he harder if it wasn't for Chester needing to pee.\n\nHard to want to workout but was able to get there to do arms chest and back stuff this morning.\n\n Early start to the work day next."
     }
   },
-  "updated": 1795441693874
+  "updated": 1795447096609
 }
