@@ -98,9 +98,9 @@
     },
     "nonfat plain greek yogurt": {
       "name": "Nonfat Plain Greek Yogurt",
-      "size": 100,
+      "size": 170,
       "unit": "g",
-      "kcal": 170,
+      "kcal": 100,
       "n": {
         "p": 18,
         "c": 6,
@@ -262,11 +262,27 @@
       "note": "Weight was mid day after lunch so not a morning weight, prolly closer to 300/299, sorry I made this today. \n\nToday was difficult to not eat because I was just thinking about the calorie deficit and meals all day that I am going to cook while on it. Hopefully that tames."
     },
     "2026-11-23": {
-      "food": [],
+      "food": [
+        {
+          "id": "mwtahbv3tt3n",
+          "name": "Nonfat Plain Greek Yogurt",
+          "amt": 84,
+          "unit": "g",
+          "kcal": 49.411764705882355,
+          "n": {
+            "p": 8.894117647058824,
+            "c": 2.9647058823529413,
+            "f": 0,
+            "fi": 0,
+            "su": 2.9647058823529413,
+            "na": 27.176470588235297
+          }
+        }
+      ],
       "ex": [],
       "wt": 299.4,
       "note": "5:00am wake up would he harder if it wasnt for Chester needing to pee."
     }
   },
-  "updated": 1795435917168
+  "updated": 1795439768655
 }
