@@ -33,6 +33,14 @@ label{display:block;font-size:.85rem;color:var(--muted);margin-bottom:4px}
 .layout{display:grid;grid-template-columns:minmax(0,1fr);gap:16px}
 .col{display:grid;gap:16px;min-width:0}
 .logs{display:grid;gap:16px;align-items:start}
+textarea{display:block;width:100%;background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:10px 12px;font:inherit;color:inherit;resize:vertical;min-height:120px;line-height:1.45}
+.wrow{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:14px;align-items:end;margin-top:12px}
+.wstat{text-align:right}
+.wstat b{display:block;font-size:1.7rem;letter-spacing:-.02em;line-height:1.1}
+.wstat span{color:var(--muted);font-size:.85rem}
+#wSpark svg{display:block;width:100%;height:auto;margin-top:10px}
+#wSpark polyline{fill:none;stroke:var(--accent);stroke-width:2;stroke-linejoin:round;stroke-linecap:round}
+#wSpark circle{fill:var(--accent)}
 .hero{display:grid;gap:18px 32px}
 .big .n{font-size:3.4rem;font-weight:800;letter-spacing:-.04em;line-height:1}
 .hero .u{color:var(--muted);margin-top:4px}
@@ -84,6 +92,7 @@ li .k{font-weight:600;white-space:nowrap}
 .fab{position:fixed;right:16px;bottom:calc(16px + env(safe-area-inset-bottom,0px));z-index:10;border-radius:999px;padding:14px 22px;box-shadow:0 6px 18px rgba(0,0,0,.3)}
 .scrim{display:none}
 @media (min-width:700px) and (max-width:899px),(min-width:1200px){.logs{grid-template-columns:minmax(0,1.5fr) minmax(0,1fr)}}
+@media (min-width:700px) and (max-width:899px),(min-width:1200px){.logs.even{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media (min-width:700px){.hero{grid-template-columns:auto minmax(0,1fr);align-items:center}}
 @media (max-width:600px){.goals{grid-template-columns:1fr}.big .n{font-size:3rem}}
 @media (min-width:900px){
@@ -112,7 +121,7 @@ li .k{font-weight:600;white-space:nowrap}
   </div>
 </header>
 <p class="note" id="sync" role="status" style="margin:-6px 0 12px"></p>
-
+ 
 <section class="panel" id="settings" hidden style="margin-bottom:16px">
   <h2 style="margin-bottom:12px">Targets</h2>
   <div class="goals">
@@ -140,7 +149,7 @@ li .k{font-weight:600;white-space:nowrap}
     <button class="btn ghost sm" id="ghForget">Forget token</button>
   </details>
 </section>
-
+ 
 <div class="layout">
   <main class="col">
     <section class="panel hero" aria-live="polite">
@@ -166,8 +175,24 @@ li .k{font-weight:600;white-space:nowrap}
       <section class="panel"><h2>Eaten</h2><ul id="foodList2"></ul></section>
       <section class="panel"><h2>Workouts</h2><ul id="exList"></ul></section>
     </div>
+    <div class="logs even">
+      <section class="panel">
+        <h2>Morning weight</h2>
+        <div class="wrow">
+          <div><label for="wt">Weight for this day (lb)</label><input id="wt" type="number" min="0" step="0.1" inputmode="decimal" placeholder="294.6"></div>
+          <div class="wstat"><b id="wAvg">–</b><span id="wAvgN">7-day average</span></div>
+        </div>
+        <p class="note" id="wChange" style="margin-top:8px"></p>
+        <div id="wSpark"></div>
+      </section>
+      <section class="panel">
+        <h2>Notes</h2>
+        <label for="note" style="margin-top:12px">Notes for this day</label>
+        <textarea id="note" rows="5" placeholder="Sleep, hunger, how the workout felt, anything worth remembering"></textarea>
+      </section>
+    </div>
   </main>
-
+ 
   <aside class="panel side" id="side" aria-label="Add entries">
     <div class="sh"><h2>Add</h2><button class="icon sheetx" id="closeSheet" aria-label="Close">×</button></div>
     <div class="tabs" role="tablist">
@@ -176,13 +201,13 @@ li .k{font-weight:600;white-space:nowrap}
       <button data-tab="quick" role="tab" aria-selected="false">Quick add</button>
       <button data-tab="ex" role="tab" aria-selected="false">Workout</button>
     </div>
-
+ 
     <div data-pane="saved">
       <label for="sFilter">Search your saved foods</label>
       <input id="sFilter" type="search" placeholder="Start typing..." autocomplete="off">
       <ul id="savedList"></ul>
     </div>
-
+ 
     <div data-pane="food" hidden>
       <div class="row"><div><label for="fName">Food</label><input id="fName" list="foodList" autocomplete="off" placeholder="Cooked rice"><datalist id="foodList"></datalist></div></div>
       <div class="row r2">
@@ -200,7 +225,7 @@ li .k{font-weight:600;white-space:nowrap}
       <div class="btns"><button class="btn" id="addFood">Add food</button><button class="btn ghost" id="saveOnly">Save to list only</button></div>
       <p class="note" id="foodErr" role="alert"></p>
     </div>
-
+ 
     <div data-pane="quick" hidden>
       <div class="row r2"><div><label for="qName">What you ate</label><input id="qName" placeholder="Chipotle bowl" autocomplete="off"></div>
       <div><label for="qKcal">Total calories</label><input id="qKcal" type="number" min="0" step="any" inputmode="decimal" placeholder="850"></div></div>
@@ -211,7 +236,7 @@ li .k{font-weight:600;white-space:nowrap}
       <button class="btn" id="qAdd">Add to today</button>
       <p class="note" id="qErr" role="alert"></p>
     </div>
-
+ 
     <div data-pane="ex" hidden>
       <div class="row"><div><label for="eName">Workout (optional)</label><input id="eName" placeholder="Evening run"></div>
       <div><label for="eKcal">Calories burned</label><input id="eKcal" type="number" min="0" step="any" inputmode="numeric" placeholder="350"></div></div>
@@ -222,7 +247,7 @@ li .k{font-weight:600;white-space:nowrap}
 <button class="btn fab" id="fab">+ Add</button>
 <div class="scrim" id="scrim"></div>
 </div>
-
+ 
 <script>
 const KEY='calorie-keeper-v1';
 const U={g:{l:'grams (g)',f:'w',k:1},oz:{l:'ounces (oz)',f:'w',k:28.3495},lb:{l:'pounds (lb)',f:'w',k:453.592},kg:{l:'kilograms (kg)',f:'w',k:1000},
@@ -242,7 +267,7 @@ function save(){S.updated=Date.now();persist();const sy=document.querySelector('
 let S=load(),day=ymd(new Date());
 const dd=()=>S.days[day]||(S.days[day]={food:[],ex:[]});
 const uid=()=>Date.now().toString(36)+Math.random().toString(36).slice(2,6);
-
+ 
 const N=[{k:'p',l:'Protein',u:'g'},{k:'c',l:'Carbs',u:'g'},{k:'f',l:'Fat',u:'g'},{k:'fi',l:'Fiber',u:'g'},{k:'su',l:'Sugar',u:'g',lim:1},{k:'na',l:'Sodium',u:'mg',lim:1}];
 $('#nutGrid').innerHTML=N.map(d=>`<div><label for="n_${d.k}">${d.l} (${d.u})</label><input id="n_${d.k}" type="number" min="0" step="any" inputmode="decimal"></div>`).join('');
 $('#tGrid').innerHTML=N.map(d=>`<div><label for="t_${d.k}">${d.l} ${d.lim?'limit':'goal'} (${d.u})</label><input id="t_${d.k}" type="number" min="0" step="any" inputmode="decimal"></div>`).join('');
@@ -280,14 +305,14 @@ function renderLib(){
   $('#savedList').innerHTML=shown.length?shown.map(k=>{const f=S.foods[k];
     return `<li><div>${esc(f.name||k)}<small>${r0(f.kcal)} kcal per ${+f.size} ${SH[f.unit]||''}${macroStr(f.n)}</small></div><div><button class="btn ghost sm" data-use="${esc(k)}">Use</button><button class="del" data-forget="${esc(k)}" aria-label="Remove ${esc(f.name||k)} from saved foods">×</button></div></li>`}).join(''):`<li class="empty" style="border:0;padding-left:0">${keys.length?'No saved foods match that search.':'Foods you add will be saved here so you only enter them once.'}</li>`;
 }
-
+ 
 $('#fName').addEventListener('input',()=>{
   const f=S.foods[$('#fName').value.trim().toLowerCase()];
   if(f){$('#sSize').value=f.size;$('#sUnit').value=f.unit;$('#sKcal').value=f.kcal;setN(f.n);fillAmountUnits();updCalc()}
 });
 $('#sUnit').addEventListener('change',()=>{fillAmountUnits();updCalc()});
 ['#sSize','#sKcal','#aAmt','#aUnit'].forEach(s=>$(s).addEventListener('input',updCalc));
-
+ 
 $('#addFood').onclick=()=>{
   const name=$('#fName').value.trim(),t=calc();
   if(!name||t===null){$('#foodErr').textContent='Enter a food name, its label serving and calories, and how much you ate.';return}
@@ -306,7 +331,7 @@ document.addEventListener('click',e=>{
   const [kind,id]=b.dataset.del.split(':');const d=dd();
   d[kind]=d[kind].filter(x=>x.id!==id);save();render();
 });
-
+ 
 $('#sFilter').addEventListener('input',renderLib);
 $('#saveOnly').onclick=()=>{
   const name=$('#fName').value.trim(),size=parseFloat($('#sSize').value),kc=parseFloat($('#sKcal').value);
@@ -325,13 +350,13 @@ document.addEventListener('click',e=>{
 // goals
 $('#gLose').value=S.goals.lose;$('#gMaint').value=S.goals.maint;$('#gCred').value=S.goals.cred;
 [['#gLose','lose'],['#gMaint','maint'],['#gCred','cred']].forEach(([s,k])=>$(s).addEventListener('input',()=>{S.goals[k]=parseFloat($(s).value)||0;save();render()}));
-
+ 
 // date nav
 function shift(n){const d=new Date(day+'T12:00:00');d.setDate(d.getDate()+n);day=ymd(d);render()}
 $('#prev').onclick=()=>shift(-1);$('#next').onclick=()=>shift(1);
 $('#todayBtn').onclick=()=>{day=ymd(new Date());render()};
 $('#date').onchange=e=>{if(e.target.value){day=e.target.value;render()}};
-
+ 
 function render(){
   const d=S.days[day]||{food:[],ex:[]},g=S.goals;
   const eaten=d.food.reduce((a,x)=>a+x.kcal,0),burn=d.ex.reduce((a,x)=>a+x.kcal,0),cred=burn*g.cred/100;
@@ -358,8 +383,12 @@ function render(){
   $('#lowNote').textContent=(net<1200&&eaten>0)?'Net intake this low is hard to sustain. Make sure you’re eating enough to fuel your workouts.':'';
   $('#foodList2').innerHTML=d.food.length?d.food.map(x=>`<li><div>${esc(x.name)}<small>${x.quick?'Quick add':(+x.amt.toFixed(2))+' '+U[x.unit].l}${macroStr(x.n)}</small></div><div><span class="k">${r0(x.kcal)} kcal</span><button class="del" data-del="food:${x.id}" aria-label="Remove ${esc(x.name)}">×</button></div></li>`).join(''):'<li class="empty" style="border:0;padding-left:0">Nothing logged yet. Add the first food above.</li>';
   $('#exList').innerHTML=d.ex.length?d.ex.map(x=>`<li><div>${esc(x.name)}</div><div><span class="k">−${r0(x.kcal)} kcal</span><button class="del" data-del="ex:${x.id}" aria-label="Remove ${esc(x.name)}">×</button></div></li>`).join(''):'<li class="empty" style="border:0;padding-left:0">No workouts logged for this day.</li>';
+  const wi=$('#wt'),ni=$('#note');
+  if(document.activeElement!==wi)wi.value=d.wt!=null?d.wt:'';
+  if(document.activeElement!==ni)ni.value=d.note||'';
+  wStats();
 }
-
+ 
 // backup + restore
 const say=t=>{$('#msg').textContent=t};
 $('#exp').onclick=()=>{
@@ -384,7 +413,7 @@ $('#imp').onchange=e=>{
   };
   r.readAsText(f);
 };
-
+ 
 const GHKEY='calorie-keeper-gh';
 const GH={repo:'',branch:'main',path:'calorie-data.json',token:'',auto:true};
 try{Object.assign(GH,JSON.parse(localStorage.getItem(GHKEY)||'{}'))}catch(e){}
@@ -442,6 +471,23 @@ $('#qAdd').onclick=()=>{
   save();['qName','qKcal','qP','qC','qF'].forEach(id=>{$('#'+id).value=''});$('#qSave').checked=false;$('#qErr').textContent='';
   renderLib();render();afterAdd('qName');
 };
+function wOn(o){const d=new Date(day+'T12:00:00');d.setDate(d.getDate()+o);const x=S.days[ymd(d)];return x&&x.wt>0?x.wt:null}
+function wAvg(a,b){const v=[];for(let o=a;o<=b;o++){const w=wOn(o);if(w!==null)v.push(w)}return v.length?{avg:v.reduce((x,y)=>x+y,0)/v.length,n:v.length}:null}
+function wStats(){
+  const cur=wAvg(-6,0),prev=wAvg(-13,-7);
+  $('#wAvg').textContent=cur?r1(cur.avg)+' lb':'–';
+  $('#wAvgN').textContent=cur?'7-day average ('+cur.n+(cur.n===1?' weigh-in)':' weigh-ins)'):'7-day average';
+  if(cur&&prev){const dv=cur.avg-prev.avg;$('#wChange').textContent=(dv>0?'+':dv<0?'\u2212':'')+r1(Math.abs(dv))+' lb compared with the 7 days before'}
+  else $('#wChange').textContent=cur?'Log a second week of weigh-ins to see your weekly change.':'Enter your weight to start your weekly average.';
+  const pts=[];for(let o=-13;o<=0;o++){const w=wOn(o);if(w!==null)pts.push({x:o+13,w})}
+  if(pts.length<2){$('#wSpark').innerHTML='';return}
+  const lo=Math.min(...pts.map(p=>p.w)),hi=Math.max(...pts.map(p=>p.w)),span=Math.max(hi-lo,1);
+  const X=p=>8+p.x/13*264,Y=p=>8+(1-(p.w-lo)/span)*40;
+  const last=pts[pts.length-1];
+  $('#wSpark').innerHTML='<svg viewBox="0 0 280 56" role="img" aria-label="Weight over the last 14 days"><polyline points="'+pts.map(p=>X(p).toFixed(1)+','+Y(p).toFixed(1)).join(' ')+'"/><circle cx="'+X(last).toFixed(1)+'" cy="'+Y(last).toFixed(1)+'" r="3.5"/></svg>';
+}
+$('#wt').addEventListener('input',()=>{const v=parseFloat($('#wt').value),d=dd();if(isNaN(v)||v<=0)delete d.wt;else d.wt=v;save();wStats()});
+$('#note').addEventListener('input',()=>{const t=$('#note').value,d=dd();if(t.trim())d.note=t;else delete d.note;save()});
 function openSettings(){$('#settings').hidden=false;$('#setBtn').setAttribute('aria-expanded','true')}
 $('#setBtn').onclick=()=>{const p=$('#settings');p.hidden=!p.hidden;$('#setBtn').setAttribute('aria-expanded',String(!p.hidden))};
 function tab(n){
@@ -473,3 +519,4 @@ boot();
 </script>
 </body>
 </html>
+ 
