@@ -192,6 +192,20 @@
         "su": 0,
         "na": 360
       }
+    },
+    "mayonnaise (best foods)": {
+      "name": "Mayonnaise (Best Foods)",
+      "size": 14,
+      "unit": "g",
+      "kcal": 100,
+      "n": {
+        "p": 0,
+        "c": 0,
+        "f": 11,
+        "fi": 0,
+        "su": 0,
+        "na": 95
+      }
     }
   },
   "days": {
@@ -348,5 +362,5 @@
       "note": "5:00am wake up would he harder if it wasn't for Chester needing to pee.\n\nHard to want to workout but was able to get there to do arms chest and back stuff this morning.\n\n Early start to the work day next."
     }
   },
-  "updated": 1795447184535
+  "updated": 1795447262639
 }
