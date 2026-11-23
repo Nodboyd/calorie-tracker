@@ -149,6 +149,13 @@
         "f": 0.3,
         "fi": 6.6
       }
+    },
+    "pure protein chcolate deluxe": {
+      "name": "Pure Protein Chcolate Deluxe",
+      "size": 1,
+      "unit": "each",
+      "kcal": 180,
+      "n": {}
     }
   },
   "days": {
@@ -229,6 +236,14 @@
           "kcal": 50,
           "n": {},
           "quick": 1
+        },
+        {
+          "id": "mwsl0pots3is",
+          "name": "Pure Protein Chcolate Deluxe",
+          "amt": 1,
+          "unit": "each",
+          "kcal": 180,
+          "n": {}
         }
       ],
       "ex": [
@@ -245,5 +260,5 @@
       ]
     }
   },
-  "updated": 1795393778582
+  "updated": 1795397003021
 }
