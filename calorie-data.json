@@ -2,7 +2,7 @@
   "goals": {
     "lose": 2200,
     "maint": 2500,
-    "cred": 75,
+    "cred": 25,
     "t": {}
   },
   "foods": {
@@ -262,5 +262,5 @@
       "note": "Weight was mid day after lunch so not a morning weight, prolly closer to 300/299, sorry I made this today. \n\nToday was difficult to not eat because I was just thinking about the calorie deficit and meals all day that I am going to cook while on it. Hopefully that tames."
     }
   },
-  "updated": 1795399683022
+  "updated": 1795399688027
 }
