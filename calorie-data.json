@@ -252,6 +252,21 @@
           "unit": "each",
           "kcal": 180,
           "n": {}
+        },
+        {
+          "id": "mwtbmitu55am",
+          "name": "Chicken Thighs (Sams Club)",
+          "amt": 6.5,
+          "unit": "oz",
+          "kcal": 227.5,
+          "n": {
+            "p": 35.75,
+            "c": 0,
+            "f": 7.3125,
+            "fi": 0,
+            "su": 0,
+            "na": 170.625
+          }
         }
       ],
       "ex": [
@@ -313,5 +328,5 @@
       "note": "5:00am wake up would he harder if it wasn't for Chester needing to pee.\n\nHard to want to workout but was able to get there to do arms chest and back stuff this morning.\n\n Early start to the work day next."
     }
   },
-  "updated": 1795441665959
+  "updated": 1795441690578
 }
