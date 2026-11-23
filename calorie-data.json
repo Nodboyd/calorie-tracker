@@ -80,6 +80,74 @@
         "su": 17.8,
         "na": 1.7
       }
+    },
+    "bite size red and gold potatoes": {
+      "name": "Bite Size Red and Gold Potatoes",
+      "size": 110,
+      "unit": "g",
+      "kcal": 98,
+      "n": {
+        "p": 2,
+        "c": 19,
+        "f": 0,
+        "fi": 1,
+        "su": 1,
+        "na": 0
+      }
+    },
+    "nonfat plain greek yogurt": {
+      "name": "Nonfat Plain Greek Yogurt",
+      "size": 100,
+      "unit": "g",
+      "kcal": 170,
+      "n": {
+        "p": 18,
+        "c": 6,
+        "f": 0,
+        "fi": 0,
+        "su": 6,
+        "na": 55
+      }
+    },
+    "josie's organics spring mix": {
+      "name": "Josie's Organics Spring Mix",
+      "size": 85,
+      "unit": "g",
+      "kcal": 15,
+      "n": {
+        "p": 1,
+        "c": 2,
+        "f": 0,
+        "fi": 1,
+        "su": 1,
+        "na": 65
+      }
+    },
+    "earthbound farm organic broccoli florets": {
+      "name": "Earthbound Farm Organic Broccoli Florets",
+      "size": 85,
+      "unit": "g",
+      "kcal": 35,
+      "n": {
+        "p": 2,
+        "c": 6,
+        "f": 0,
+        "fi": 2,
+        "su": 1,
+        "na": 30
+      }
+    },
+    "sweet potato": {
+      "name": "Sweet Potato",
+      "size": 200,
+      "unit": "g",
+      "kcal": 180,
+      "n": {
+        "p": 4,
+        "c": 41,
+        "f": 0.3,
+        "fi": 6.6
+      }
     }
   },
   "days": {
@@ -144,5 +212,5 @@
       ]
     }
   },
-  "updated": 1795388593919
+  "updated": 1795392994419
 }
