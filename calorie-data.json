@@ -37,7 +37,8 @@
         "c": 15,
         "f": 4.5,
         "fi": 6,
-        "su": 1
+        "su": 1,
+        "na": 400
       }
     },
     "signature select white rice": {
@@ -277,6 +278,21 @@
             "su": 2.9647058823529413,
             "na": 27.176470588235297
           }
+        },
+        {
+          "id": "mwtaibyo98nc",
+          "name": "Orgain Chocolate Peanut butter Protein Powder",
+          "amt": 44,
+          "unit": "g",
+          "kcal": 153.04347826086956,
+          "n": {
+            "p": 20.086956521739133,
+            "c": 14.347826086956522,
+            "f": 4.304347826086957,
+            "fi": 5.739130434782609,
+            "su": 0.9565217391304348,
+            "na": 382.60869565217394
+          }
         }
       ],
       "ex": [],
@@ -284,5 +300,5 @@
       "note": "5:00am wake up would he harder if it wasnt for Chester needing to pee."
     }
   },
-  "updated": 1795439768655
+  "updated": 1795439815440
 }
