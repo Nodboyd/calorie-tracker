@@ -536,16 +536,16 @@
         {
           "id": "mwupv1gmqjor",
           "name": "Chicken Thighs (Sams Club)",
-          "amt": 7.8,
+          "amt": 8,
           "unit": "oz",
-          "kcal": 273,
+          "kcal": 280,
           "n": {
-            "p": 42.9,
+            "p": 44,
             "c": 0,
-            "f": 8.775,
+            "f": 9,
             "fi": 0,
             "su": 0,
-            "na": 204.75
+            "na": 210
           }
         },
         {
@@ -634,5 +634,5 @@
       "wt": 296.6
     }
   },
-  "updated": 1795528427812
+  "updated": 1795530687976
 }
