@@ -33,6 +33,10 @@ label{display:block;font-size:.85rem;color:var(--muted);margin-bottom:4px}
 .layout{display:grid;grid-template-columns:minmax(0,1fr);gap:16px}
 .col{display:grid;gap:16px;min-width:0}
 .logs{display:grid;gap:16px;align-items:start}
+.del.ed{font-size:.85rem;color:var(--accent);font-weight:600}
+dialog{width:min(560px,calc(100vw - 24px));max-height:92vh;overflow:auto;background:var(--surface);color:var(--ink);border:1px solid var(--line);border-radius:16px;padding:18px}
+dialog::backdrop{background:rgba(0,0,0,.5)}
+@media (max-width:520px){dialog .ng{grid-template-columns:repeat(2,minmax(0,1fr))}}
 textarea{display:block;width:100%;background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:10px 12px;font:inherit;color:inherit;resize:vertical;min-height:120px;line-height:1.45}
 .wrow{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:14px;align-items:end;margin-top:12px}
 .wstat{text-align:right}
@@ -246,6 +250,16 @@ li .k{font-weight:600;white-space:nowrap}
 </div>
 <button class="btn fab" id="fab">+ Add</button>
 <div class="scrim" id="scrim"></div>
+<dialog id="dlg" aria-labelledby="dTitle">
+  <h2 id="dTitle">Edit food</h2>
+  <div class="row" style="margin-top:12px"><div><label for="dName">Name</label><input id="dName" autocomplete="off"></div></div>
+  <div class="row r2"><div><label for="dQty" id="dQtyL">Amount</label><input id="dQty" type="number" min="0" step="any" inputmode="decimal"></div><div><label for="dUnit">Unit</label><select id="dUnit"></select></div></div>
+  <div class="row"><div><label for="dKcal" id="dKcalL">Calories</label><input id="dKcal" type="number" min="0" step="any" inputmode="decimal"></div></div>
+  <div class="ng" id="dNut" style="margin-bottom:10px"></div>
+  <p class="note" id="dNote"></p>
+  <p class="note" id="dErr" role="alert"></p>
+  <div class="btns" style="margin-top:12px"><button class="btn" id="dSave">Save changes</button><button class="btn ghost" id="dCancel">Cancel</button><button class="btn ghost" id="dRecalc" hidden>Recalculate from saved food</button></div>
+</dialog>
 </div>
  
 <script>
@@ -303,7 +317,7 @@ function renderLib(){
   const q=$('#sFilter').value.trim().toLowerCase();
   const shown=keys.filter(k=>!q||k.includes(q));
   $('#savedList').innerHTML=shown.length?shown.map(k=>{const f=S.foods[k];
-    return `<li><div>${esc(f.name||k)}<small>${r0(f.kcal)} kcal per ${+f.size} ${SH[f.unit]||''}${macroStr(f.n)}</small></div><div><button class="btn ghost sm" data-use="${esc(k)}">Use</button><button class="del" data-forget="${esc(k)}" aria-label="Remove ${esc(f.name||k)} from saved foods">×</button></div></li>`}).join(''):`<li class="empty" style="border:0;padding-left:0">${keys.length?'No saved foods match that search.':'Foods you add will be saved here so you only enter them once.'}</li>`;
+    return `<li><div>${esc(f.name||k)}<small>${r0(f.kcal)} kcal per ${+f.size} ${SH[f.unit]||''}${macroStr(f.n)}</small></div><div><button class="btn ghost sm" data-use="${esc(k)}">Use</button><button class="del ed" data-sedit="${esc(k)}" aria-label="Edit ${esc(f.name||k)}">Edit</button><button class="del" data-forget="${esc(k)}" aria-label="Remove ${esc(f.name||k)} from saved foods">×</button></div></li>`}).join(''):`<li class="empty" style="border:0;padding-left:0">${keys.length?'No saved foods match that search.':'Foods you add will be saved here so you only enter them once.'}</li>`;
 }
  
 $('#fName').addEventListener('input',()=>{
@@ -381,7 +395,7 @@ function render(){
   else v=`${r0(net-maint)} kcal over your maintenance ceiling, which would put you in a surplus today.`;
   $('#verdict').textContent=v;
   $('#lowNote').textContent=(net<1200&&eaten>0)?'Net intake this low is hard to sustain. Make sure you’re eating enough to fuel your workouts.':'';
-  $('#foodList2').innerHTML=d.food.length?d.food.map(x=>`<li><div>${esc(x.name)}<small>${x.quick?'Quick add':(+x.amt.toFixed(2))+' '+U[x.unit].l}${macroStr(x.n)}</small></div><div><span class="k">${r0(x.kcal)} kcal</span><button class="del" data-del="food:${x.id}" aria-label="Remove ${esc(x.name)}">×</button></div></li>`).join(''):'<li class="empty" style="border:0;padding-left:0">Nothing logged yet. Add the first food above.</li>';
+  $('#foodList2').innerHTML=d.food.length?d.food.map(x=>`<li><div>${esc(x.name)}<small>${x.quick?'Quick add':(+x.amt.toFixed(2))+' '+U[x.unit].l}${macroStr(x.n)}</small></div><div><span class="k">${r0(x.kcal)} kcal</span><button class="del ed" data-edit="${x.id}" aria-label="Edit ${esc(x.name)}">Edit</button><button class="del" data-del="food:${x.id}" aria-label="Remove ${esc(x.name)}">×</button></div></li>`).join(''):'<li class="empty" style="border:0;padding-left:0">Nothing logged yet. Add the first food above.</li>';
   $('#exList').innerHTML=d.ex.length?d.ex.map(x=>`<li><div>${esc(x.name)}</div><div><span class="k">−${r0(x.kcal)} kcal</span><button class="del" data-del="ex:${x.id}" aria-label="Remove ${esc(x.name)}">×</button></div></li>`).join(''):'<li class="empty" style="border:0;padding-left:0">No workouts logged for this day.</li>';
   const wi=$('#wt'),ni=$('#note');
   if(document.activeElement!==wi)wi.value=d.wt!=null?d.wt:'';
@@ -470,6 +484,54 @@ $('#qAdd').onclick=()=>{
   if($('#qSave').checked)S.foods[name.toLowerCase()]={name,size:1,unit:'each',kcal:kc,n};
   save();['qName','qKcal','qP','qC','qF'].forEach(id=>{$('#'+id).value=''});$('#qSave').checked=false;$('#qErr').textContent='';
   renderLib();render();afterAdd('qName');
+};
+const dlg=$('#dlg');let EDIT=null;
+$('#dUnit').innerHTML=allOpts;
+$('#dNut').innerHTML=N.map(d=>`<div><label for="d_${d.k}">${d.l} (${d.u})</label><input id="d_${d.k}" type="number" min="0" step="any" inputmode="decimal"></div>`).join('');
+function openEdit(mode,ref){
+  let name,qty,unit,kcal,n;
+  if(mode==='entry'){const x=dd().food.find(f=>f.id===ref);if(!x)return;name=x.name;qty=x.amt;unit=x.unit;kcal=x.kcal;n=x.n||{}}
+  else{const f=S.foods[ref];if(!f)return;name=f.name||ref;qty=f.size;unit=f.unit;kcal=f.kcal;n=f.n||{}}
+  EDIT={mode,ref};
+  const e=mode==='entry';
+  $('#dTitle').textContent=e?'Edit logged food':'Edit saved food';
+  $('#dQtyL').textContent=e?'Amount eaten':'Label serving size';
+  $('#dKcalL').textContent=e?'Total calories':'Calories per serving';
+  $('#dNote').textContent=e?'Nutrition values are totals for this entry. Use Recalculate to refill them from the saved food after you update it.':'Nutrition values are per label serving. Entries you already logged keep their old numbers until you edit them.';
+  $('#dRecalc').hidden=!e;$('#dErr').textContent='';
+  $('#dName').value=name;$('#dQty').value=+(+qty).toFixed(3);$('#dUnit').value=unit;$('#dKcal').value=+(+kcal).toFixed(1);
+  N.forEach(d=>{$('#d_'+d.k).value=n[d.k]!=null?+(+n[d.k]).toFixed(2):''});
+  dlg.showModal();
+}
+document.addEventListener('click',e=>{
+  const a=e.target.closest('[data-edit]'),b=e.target.closest('[data-sedit]');
+  if(a)openEdit('entry',a.dataset.edit);
+  if(b)openEdit('saved',b.dataset.sedit);
+});
+$('#dCancel').onclick=()=>dlg.close();
+$('#dRecalc').onclick=()=>{
+  const f=S.foods[$('#dName').value.trim().toLowerCase()],qty=parseFloat($('#dQty').value),u=$('#dUnit').value;
+  if(!f||!(qty>0)){$('#dErr').textContent='There is no saved food with this name, or no amount is entered.';return}
+  if(U[u].f!==U[f.unit].f){$('#dErr').textContent='The unit doesn’t match the saved food ('+U[f.unit].l+'), so it can’t be recalculated.';return}
+  const fac=qty*U[u].k/(f.size*U[f.unit].k);
+  $('#dKcal').value=+(f.kcal*fac).toFixed(1);
+  N.forEach(d=>{$('#d_'+d.k).value=(f.n&&f.n[d.k]!=null)?+(f.n[d.k]*fac).toFixed(2):''});
+  $('#dErr').textContent='Recalculated from the saved food. Review it, then save.';
+};
+$('#dSave').onclick=()=>{
+  const name=$('#dName').value.trim(),qty=parseFloat($('#dQty').value),kc=parseFloat($('#dKcal').value),unit=$('#dUnit').value;
+  if(!name||!(qty>0)||isNaN(kc)||kc<0){$('#dErr').textContent='Enter a name, an amount above zero, and the calories.';return}
+  const n={};N.forEach(d=>{const v=parseFloat($('#d_'+d.k).value);if(!isNaN(v)&&v>=0)n[d.k]=v});
+  if(EDIT.mode==='entry'){
+    const x=dd().food.find(f=>f.id===EDIT.ref);
+    if(x)Object.assign(x,{name,amt:qty,unit,kcal:kc,n});
+  }else{
+    const nk=name.toLowerCase();
+    if(nk!==EDIT.ref&&S.foods[nk]){$('#dErr').textContent='A saved food with that name already exists.';return}
+    if(nk!==EDIT.ref)delete S.foods[EDIT.ref];
+    S.foods[nk]={name,size:qty,unit,kcal:kc,n};
+  }
+  save();renderLib();render();dlg.close();
 };
 function wOn(o){const d=new Date(day+'T12:00:00');d.setDate(d.getDate()+o);const x=S.days[ymd(d)];return x&&x.wt>0?x.wt:null}
 function wAvg(a,b){const v=[];for(let o=a;o<=b;o++){const w=wOn(o);if(w!==null)v.push(w)}return v.length?{avg:v.reduce((x,y)=>x+y,0)/v.length,n:v.length}:null}
