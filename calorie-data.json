@@ -252,6 +252,20 @@
         "su": 8,
         "na": 210
       }
+    },
+    "fresh asparagus": {
+      "name": "Fresh Asparagus",
+      "size": 96,
+      "unit": "g",
+      "kcal": 20,
+      "n": {
+        "p": 2,
+        "c": 4,
+        "f": 0,
+        "fi": 2,
+        "su": 2,
+        "na": 0
+      }
     }
   },
   "days": {
@@ -518,5 +532,5 @@
       "note": "5:00am wake up would he harder if it wasn't for Chester needing to pee.\n\nHard to want to workout but was able to get there to do arms chest and back stuff this morning.\n\n Early start to the work day next.\n\nMid day, work is going good. Hungry but not starving, would rather have a big dinner than small lunch and medium dinner at this point, but am feeling snackish.\n\nDinner was gas, potatoes, broccoli, and some good homemade wings. \n\nProtein bar for desert I think..."
     }
   },
-  "updated": 1795485235898
+  "updated": 1795485583632
 }
