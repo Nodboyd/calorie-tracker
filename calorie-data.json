@@ -532,10 +532,26 @@
       "note": "5:00am wake up would he harder if it wasn't for Chester needing to pee.\n\nHard to want to workout but was able to get there to do arms chest and back stuff this morning.\n\n Early start to the work day next.\n\nMid day, work is going good. Hungry but not starving, would rather have a big dinner than small lunch and medium dinner at this point, but am feeling snackish.\n\nDinner was gas, potatoes, broccoli, and some good homemade wings. \n\nProtein bar for desert I think..."
     },
     "2026-11-24": {
-      "food": [],
+      "food": [
+        {
+          "id": "mwupv1gmqjor",
+          "name": "Chicken Thighs (Sams Club)",
+          "amt": 7.8,
+          "unit": "oz",
+          "kcal": 273,
+          "n": {
+            "p": 42.9,
+            "c": 0,
+            "f": 8.775,
+            "fi": 0,
+            "su": 0,
+            "na": 204.75
+          }
+        }
+      ],
       "ex": [],
       "wt": 296.6
     }
   },
-  "updated": 1795522169410
+  "updated": 1795526068774
 }
