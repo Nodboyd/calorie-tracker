@@ -57,7 +57,12 @@ textarea{display:block;width:100%;background:var(--bg);border:1px solid var(--li
 .fill{position:absolute;left:0;top:0;height:16px;border-radius:8px 0 0 8px;background:var(--go);opacity:.9;transition:width .35s ease,background .2s}
 .pin{position:absolute;top:-8px;width:3px;height:32px;margin-left:-1.5px;background:var(--ink);border-radius:2px;transition:left .35s ease}
 .pin span{position:absolute;bottom:36px;left:50%;transform:translateX(-50%);background:var(--ink);color:var(--bg);font-size:.8rem;font-weight:600;padding:2px 8px;border-radius:8px;white-space:nowrap}
-.mark{position:absolute;top:22px;transform:translateX(-50%);font-size:.8rem;color:var(--muted);text-align:center;white-space:nowrap}
+.mark{position:absolute;top:22px;font-size:.8rem;line-height:1.25;color:var(--muted);white-space:nowrap}
+.mark.l{transform:translateX(-100%);text-align:right;padding-right:6px}
+.mark.r{text-align:left;padding-left:6px}
+.mark::before{content:"";position:absolute;top:-8px;height:8px;width:2px;background:var(--muted);opacity:.7}
+.mark.l::before{right:0}
+.mark.r::before{left:0}
 .verdict{margin:0}
 .nuts{grid-column:1/-1;display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:14px}
 .nuts:not(:empty){padding-top:16px;border-top:1px solid var(--line)}
@@ -70,6 +75,8 @@ ul{list-style:none;margin:8px 0 0;padding:0}
 li{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:11px 0;border-top:1px solid var(--line)}
 li small{display:block;color:var(--muted)}
 li .k{font-weight:600;white-space:nowrap}
+li>div:first-child{min-width:0;flex:1}
+li>div:last-child{display:flex;align-items:center;gap:4px;flex-shrink:0;white-space:nowrap}
 .del{background:transparent;border:0;color:var(--muted);font-size:1.2rem;padding:4px 8px}
 .empty{color:var(--muted)}
 .row{display:grid;gap:10px;margin-bottom:10px}
@@ -125,7 +132,7 @@ li .k{font-weight:600;white-space:nowrap}
   </div>
 </header>
 <p class="note" id="sync" role="status" style="margin:-6px 0 12px"></p>
- 
+
 <section class="panel" id="settings" hidden style="margin-bottom:16px">
   <h2 style="margin-bottom:12px">Targets</h2>
   <div class="goals">
@@ -153,7 +160,7 @@ li .k{font-weight:600;white-space:nowrap}
     <button class="btn ghost sm" id="ghForget">Forget token</button>
   </details>
 </section>
- 
+
 <div class="layout">
   <main class="col">
     <section class="panel hero" aria-live="polite">
@@ -167,8 +174,8 @@ li .k{font-weight:600;white-space:nowrap}
           <div class="track"><i class="z1" id="z1"></i><i class="z2" id="z2"></i><i class="z3" id="z3"></i></div>
           <div class="fill" id="fill"></div>
           <div class="pin" id="pin"><span id="pinLbl"></span></div>
-          <div class="mark" id="mLose"></div>
-          <div class="mark" id="mMaint"></div>
+          <div class="mark l" id="mLose"></div>
+          <div class="mark r" id="mMaint"></div>
         </div>
         <p class="verdict" id="verdict"></p>
         <p class="note" id="lowNote"></p>
@@ -196,7 +203,7 @@ li .k{font-weight:600;white-space:nowrap}
       </section>
     </div>
   </main>
- 
+
   <aside class="panel side" id="side" aria-label="Add entries">
     <div class="sh"><h2>Add</h2><button class="icon sheetx" id="closeSheet" aria-label="Close">×</button></div>
     <div class="tabs" role="tablist">
@@ -205,13 +212,13 @@ li .k{font-weight:600;white-space:nowrap}
       <button data-tab="quick" role="tab" aria-selected="false">Quick add</button>
       <button data-tab="ex" role="tab" aria-selected="false">Workout</button>
     </div>
- 
+
     <div data-pane="saved">
       <label for="sFilter">Search your saved foods</label>
       <input id="sFilter" type="search" placeholder="Start typing..." autocomplete="off">
       <ul id="savedList"></ul>
     </div>
- 
+
     <div data-pane="food" hidden>
       <div class="row"><div><label for="fName">Food</label><input id="fName" list="foodList" autocomplete="off" placeholder="Cooked rice"><datalist id="foodList"></datalist></div></div>
       <div class="row r2">
@@ -229,7 +236,7 @@ li .k{font-weight:600;white-space:nowrap}
       <div class="btns"><button class="btn" id="addFood">Add food</button><button class="btn ghost" id="saveOnly">Save to list only</button></div>
       <p class="note" id="foodErr" role="alert"></p>
     </div>
- 
+
     <div data-pane="quick" hidden>
       <div class="row r2"><div><label for="qName">What you ate</label><input id="qName" placeholder="Chipotle bowl" autocomplete="off"></div>
       <div><label for="qKcal">Total calories</label><input id="qKcal" type="number" min="0" step="any" inputmode="decimal" placeholder="850"></div></div>
@@ -240,7 +247,7 @@ li .k{font-weight:600;white-space:nowrap}
       <button class="btn" id="qAdd">Add to today</button>
       <p class="note" id="qErr" role="alert"></p>
     </div>
- 
+
     <div data-pane="ex" hidden>
       <div class="row"><div><label for="eName">Workout (optional)</label><input id="eName" placeholder="Evening run"></div>
       <div><label for="eKcal">Calories burned</label><input id="eKcal" type="number" min="0" step="any" inputmode="numeric" placeholder="350"></div></div>
@@ -261,7 +268,7 @@ li .k{font-weight:600;white-space:nowrap}
   <div class="btns" style="margin-top:12px"><button class="btn" id="dSave">Save changes</button><button class="btn ghost" id="dCancel">Cancel</button><button class="btn ghost" id="dRecalc" hidden>Recalculate from saved food</button></div>
 </dialog>
 </div>
- 
+
 <script>
 const KEY='calorie-keeper-v1';
 const U={g:{l:'grams (g)',f:'w',k:1},oz:{l:'ounces (oz)',f:'w',k:28.3495},lb:{l:'pounds (lb)',f:'w',k:453.592},kg:{l:'kilograms (kg)',f:'w',k:1000},
@@ -281,7 +288,7 @@ function save(){S.updated=Date.now();persist();const sy=document.querySelector('
 let S=load(),day=ymd(new Date());
 const dd=()=>S.days[day]||(S.days[day]={food:[],ex:[]});
 const uid=()=>Date.now().toString(36)+Math.random().toString(36).slice(2,6);
- 
+
 const N=[{k:'p',l:'Protein',u:'g'},{k:'c',l:'Carbs',u:'g'},{k:'f',l:'Fat',u:'g'},{k:'fi',l:'Fiber',u:'g'},{k:'su',l:'Sugar',u:'g',lim:1},{k:'na',l:'Sodium',u:'mg',lim:1}];
 $('#nutGrid').innerHTML=N.map(d=>`<div><label for="n_${d.k}">${d.l} (${d.u})</label><input id="n_${d.k}" type="number" min="0" step="any" inputmode="decimal"></div>`).join('');
 $('#tGrid').innerHTML=N.map(d=>`<div><label for="t_${d.k}">${d.l} ${d.lim?'limit':'goal'} (${d.u})</label><input id="t_${d.k}" type="number" min="0" step="any" inputmode="decimal"></div>`).join('');
@@ -319,14 +326,14 @@ function renderLib(){
   $('#savedList').innerHTML=shown.length?shown.map(k=>{const f=S.foods[k];
     return `<li><div>${esc(f.name||k)}<small>${r0(f.kcal)} kcal per ${+f.size} ${SH[f.unit]||''}${macroStr(f.n)}</small></div><div><button class="btn ghost sm" data-use="${esc(k)}">Use</button><button class="del ed" data-sedit="${esc(k)}" aria-label="Edit ${esc(f.name||k)}">Edit</button><button class="del" data-forget="${esc(k)}" aria-label="Remove ${esc(f.name||k)} from saved foods">×</button></div></li>`}).join(''):`<li class="empty" style="border:0;padding-left:0">${keys.length?'No saved foods match that search.':'Foods you add will be saved here so you only enter them once.'}</li>`;
 }
- 
+
 $('#fName').addEventListener('input',()=>{
   const f=S.foods[$('#fName').value.trim().toLowerCase()];
   if(f){$('#sSize').value=f.size;$('#sUnit').value=f.unit;$('#sKcal').value=f.kcal;setN(f.n);fillAmountUnits();updCalc()}
 });
 $('#sUnit').addEventListener('change',()=>{fillAmountUnits();updCalc()});
 ['#sSize','#sKcal','#aAmt','#aUnit'].forEach(s=>$(s).addEventListener('input',updCalc));
- 
+
 $('#addFood').onclick=()=>{
   const name=$('#fName').value.trim(),t=calc();
   if(!name||t===null){$('#foodErr').textContent='Enter a food name, its label serving and calories, and how much you ate.';return}
@@ -345,7 +352,7 @@ document.addEventListener('click',e=>{
   const [kind,id]=b.dataset.del.split(':');const d=dd();
   d[kind]=d[kind].filter(x=>x.id!==id);save();render();
 });
- 
+
 $('#sFilter').addEventListener('input',renderLib);
 $('#saveOnly').onclick=()=>{
   const name=$('#fName').value.trim(),size=parseFloat($('#sSize').value),kc=parseFloat($('#sKcal').value);
@@ -364,13 +371,13 @@ document.addEventListener('click',e=>{
 // goals
 $('#gLose').value=S.goals.lose;$('#gMaint').value=S.goals.maint;$('#gCred').value=S.goals.cred;
 [['#gLose','lose'],['#gMaint','maint'],['#gCred','cred']].forEach(([s,k])=>$(s).addEventListener('input',()=>{S.goals[k]=parseFloat($(s).value)||0;save();render()}));
- 
+
 // date nav
 function shift(n){const d=new Date(day+'T12:00:00');d.setDate(d.getDate()+n);day=ymd(d);render()}
 $('#prev').onclick=()=>shift(-1);$('#next').onclick=()=>shift(1);
 $('#todayBtn').onclick=()=>{day=ymd(new Date());render()};
 $('#date').onchange=e=>{if(e.target.value){day=e.target.value;render()}};
- 
+
 function render(){
   const d=S.days[day]||{food:[],ex:[]},g=S.goals;
   const eaten=d.food.reduce((a,x)=>a+x.kcal,0),burn=d.ex.reduce((a,x)=>a+x.kcal,0),cred=burn*g.cred/100;
@@ -402,7 +409,7 @@ function render(){
   if(document.activeElement!==ni)ni.value=d.note||'';
   wStats();
 }
- 
+
 // backup + restore
 const say=t=>{$('#msg').textContent=t};
 $('#exp').onclick=()=>{
@@ -427,7 +434,7 @@ $('#imp').onchange=e=>{
   };
   r.readAsText(f);
 };
- 
+
 const GHKEY='calorie-keeper-gh';
 const GH={repo:'',branch:'main',path:'calorie-data.json',token:'',auto:true};
 try{Object.assign(GH,JSON.parse(localStorage.getItem(GHKEY)||'{}'))}catch(e){}
@@ -581,4 +588,3 @@ boot();
 </script>
 </body>
 </html>
- 
