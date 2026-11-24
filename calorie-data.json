@@ -530,7 +530,27 @@
       ],
       "wt": 299.4,
       "note": "5:00am wake up would he harder if it wasn't for Chester needing to pee.\n\nHard to want to workout but was able to get there to do arms chest and back stuff this morning.\n\n Early start to the work day next.\n\nMid day, work is going good. Hungry but not starving, would rather have a big dinner than small lunch and medium dinner at this point, but am feeling snackish.\n\nDinner was gas, potatoes, broccoli, and some good homemade wings. \n\nProtein bar for desert I think..."
+    },
+    "2026-11-24": {
+      "food": [
+        {
+          "id": "mwu1toq1e2qg",
+          "name": "Orgain Chocolate Peanut butter Protein Powder",
+          "amt": 46,
+          "unit": "g",
+          "kcal": 160,
+          "n": {
+            "p": 21,
+            "c": 15,
+            "f": 4.5,
+            "fi": 6,
+            "su": 1,
+            "na": 400
+          }
+        }
+      ],
+      "ex": []
     }
   },
-  "updated": 1795485583632
+  "updated": 1795485694825
 }
