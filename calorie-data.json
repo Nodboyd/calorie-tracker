@@ -68,8 +68,8 @@
     },
     "oat milk (sams club)": {
       "name": "Oat Milk (Sams Club)",
-      "size": 1,
-      "unit": "cup",
+      "size": 240,
+      "unit": "ml",
       "kcal": 90,
       "n": {
         "p": 1,
@@ -577,11 +577,26 @@
             "su": 0,
             "na": 20
           }
+        },
+        {
+          "id": "mwuqmu31uqt4",
+          "name": "Oat Milk (Sams Club)",
+          "amt": 240,
+          "unit": "ml",
+          "kcal": 90,
+          "n": {
+            "p": 1,
+            "c": 16,
+            "f": 3,
+            "fi": 2,
+            "su": 6,
+            "na": 100
+          }
         }
       ],
       "ex": [],
       "wt": 296.6
     }
   },
-  "updated": 1795526098901
+  "updated": 1795527365581
 }
