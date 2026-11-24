@@ -562,10 +562,25 @@
             "su": 6,
             "na": 100
           }
+        },
+        {
+          "id": "mwu1ujgv7h0a",
+          "name": "Nonfat Plain Greek Yogurt",
+          "amt": 340,
+          "unit": "g",
+          "kcal": 200,
+          "n": {
+            "p": 36,
+            "c": 12,
+            "f": 0,
+            "fi": 0,
+            "su": 12,
+            "na": 110
+          }
         }
       ],
       "ex": []
     }
   },
-  "updated": 1795485711963
+  "updated": 1795485734671
 }
