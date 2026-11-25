@@ -753,6 +753,15 @@
             "su": 10.00677966101695,
             "na": 0
           }
+        },
+        {
+          "id": "mwwjlu3t931b",
+          "name": "Peanuts",
+          "amt": 1,
+          "unit": "each",
+          "kcal": 180,
+          "n": {},
+          "quick": 1
         }
       ],
       "ex": [
@@ -766,5 +775,5 @@
       "note": "5am was easy but didnt want to be awake... but got there. \n\nShoulders and back at the gym today. It was hard. Im under eating for sure so I need to do better for better recovery."
     }
   },
-  "updated": 1795616833375
+  "updated": 1795636493993
 }
