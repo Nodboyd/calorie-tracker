@@ -667,6 +667,14 @@
             "su": 0,
             "na": 540
           }
+        },
+        {
+          "id": "mwviwxdyu4y5",
+          "name": "Pure Protein Chcolate Deluxe",
+          "amt": 1,
+          "unit": "each",
+          "kcal": 180,
+          "n": {}
         }
       ],
       "ex": [
@@ -680,5 +688,5 @@
       "note": "Easy 5:00am wake up day to day, hopefully that sticks. \n\nWorkout was good, not too busy in the gym and there was a guy doing some of the same workouts as me."
     }
   },
-  "updated": 1795574166416
+  "updated": 1795574865670
 }
