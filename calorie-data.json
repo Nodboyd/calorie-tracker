@@ -269,6 +269,20 @@
         "su": 2,
         "na": 0
       }
+    },
+    "banana": {
+      "name": "Banana",
+      "size": 118,
+      "unit": "g",
+      "kcal": 105,
+      "n": {
+        "p": 1.29,
+        "c": 26.9,
+        "f": 0.39,
+        "fi": 3.07,
+        "su": 14.4,
+        "na": 0
+      }
     }
   },
   "days": {
@@ -709,6 +723,36 @@
             "su": 6.025,
             "na": 100.41666666666667
           }
+        },
+        {
+          "id": "mww7t5qdrzo5",
+          "name": "Orgain Chocolate Peanut butter Protein Powder",
+          "amt": 47,
+          "unit": "g",
+          "kcal": 163.47826086956522,
+          "n": {
+            "p": 21.456521739130437,
+            "c": 15.32608695652174,
+            "f": 4.597826086956522,
+            "fi": 6.130434782608696,
+            "su": 1.0217391304347827,
+            "na": 408.69565217391306
+          }
+        },
+        {
+          "id": "mww7wfvi4mpu",
+          "name": "Banana",
+          "amt": 82,
+          "unit": "g",
+          "kcal": 72.96610169491525,
+          "n": {
+            "p": 0.8964406779661017,
+            "c": 18.69322033898305,
+            "f": 0.2710169491525424,
+            "fi": 2.1333898305084746,
+            "su": 10.00677966101695,
+            "na": 0
+          }
         }
       ],
       "ex": [
@@ -722,5 +766,5 @@
       "note": "5am was easy but didnt want to be awake... but got there. \n\nShoulders and back at the gym today. It was hard. Im under eating for sure so I need to do better for better recovery."
     }
   },
-  "updated": 1795616607607
+  "updated": 1795616833375
 }
