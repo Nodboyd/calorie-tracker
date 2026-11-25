@@ -694,7 +694,23 @@
       "steps": 10068
     },
     "2026-11-25": {
-      "food": [],
+      "food": [
+        {
+          "id": "mww7rlo7wi87",
+          "name": "Oat Milk (Sams Club)",
+          "amt": 241,
+          "unit": "ml",
+          "kcal": 90.375,
+          "n": {
+            "p": 1.0041666666666667,
+            "c": 16.066666666666666,
+            "f": 3.0125,
+            "fi": 2.0083333333333333,
+            "su": 6.025,
+            "na": 100.41666666666667
+          }
+        }
+      ],
       "ex": [
         {
           "id": "mww5rum9guii",
@@ -706,5 +722,5 @@
       "note": "5am was easy but didnt want to be awake... but got there. \n\nShoulders and back at the gym today. It was hard. Im under eating for sure so I need to do better for better recovery."
     }
   },
-  "updated": 1795613307248
+  "updated": 1795616607607
 }
