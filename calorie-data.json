@@ -637,6 +637,21 @@
             "su": 0,
             "na": 362.1875
           }
+        },
+        {
+          "id": "mwvidv9x29ga",
+          "name": "Fresh Asparagus",
+          "amt": 236,
+          "unit": "g",
+          "kcal": 49.166666666666664,
+          "n": {
+            "p": 4.916666666666667,
+            "c": 9.833333333333334,
+            "f": 0,
+            "fi": 4.916666666666667,
+            "su": 4.916666666666667,
+            "na": 0
+          }
         }
       ],
       "ex": [
@@ -650,5 +665,5 @@
       "note": "Easy 5:00am wake up day to day, hopefully that sticks. \n\nWorkout was good, not too busy in the gym and there was a guy doing some of the same workouts as me."
     }
   },
-  "updated": 1795573900783
+  "updated": 1795573976469
 }
