@@ -695,9 +695,15 @@
     },
     "2026-11-25": {
       "food": [],
-      "ex": [],
+      "ex": [
+        {
+          "id": "mww5rum9guii",
+          "name": "morning strengh training",
+          "kcal": 350
+        }
+      ],
       "wt": 295.4
     }
   },
-  "updated": 1795609108149
+  "updated": 1795613259969
 }
