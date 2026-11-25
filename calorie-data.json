@@ -379,7 +379,8 @@
         }
       ],
       "wt": 304,
-      "note": "Weight was mid day after lunch so not a morning weight, prolly closer to 300/299, sorry I made this today. \n\nToday was difficult to not eat because I was just thinking about the calorie deficit and meals all day that I am going to cook while on it. Hopefully that tames."
+      "note": "Weight was mid day after lunch so not a morning weight, prolly closer to 300/299, sorry I made this today. \n\nToday was difficult to not eat because I was just thinking about the calorie deficit and meals all day that I am going to cook while on it. Hopefully that tames.",
+      "wx": 1
     },
     "2026-11-23": {
       "food": [
@@ -698,5 +699,5 @@
       "wt": 295.4
     }
   },
-  "updated": 1795609093968
+  "updated": 1795609108149
 }
