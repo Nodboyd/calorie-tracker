@@ -116,6 +116,32 @@ li>div:last-child{display:flex;align-items:center;gap:4px;flex-shrink:0;white-sp
   .side.open{transform:none;visibility:visible}
   .scrim.open{display:block;position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:20}
 }
+[hidden]{display:none!important}
+.btn.ghost[aria-pressed=true]{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.habits{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:16px;margin-top:12px}
+.hrow{display:flex;align-items:center;gap:8px}
+.hg{color:var(--muted);font-size:.85rem;white-space:nowrap}
+.pb{height:8px;border-radius:4px;background:var(--line);overflow:hidden;margin-top:8px}
+.pb i{display:block;height:100%;width:0;background:var(--accent);border-radius:4px;transition:width .3s}
+.pb i.done{background:var(--go)}
+.wx{display:flex;gap:8px;align-items:center;margin:8px 0 0;font-size:.88rem}
+.wx input{width:auto}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-top:12px}
+.card{background:var(--bg);border-radius:12px;padding:12px}
+.card b{display:block;font-size:1.35rem;letter-spacing:-.02em;line-height:1.15}
+.card span{color:var(--muted);font-size:.85rem}
+.card small{display:block;color:var(--muted);font-size:.78rem;margin-top:2px}
+.charts{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,440px),1fr));gap:16px}
+.chart{display:block;width:100%;height:auto;margin-top:8px}
+.chart text{fill:var(--muted);font-size:10px}
+.chart .gl{stroke:var(--line)}
+.chart .goal{stroke:var(--ink);stroke-dasharray:4 3;opacity:.55}
+.chart .bar{fill:var(--accent)}
+.chart .bar.go{fill:var(--go)}.chart .bar.mid{fill:var(--mid)}.chart .bar.over{fill:var(--over)}
+.chart .ln{fill:none;stroke-linejoin:round;stroke-linecap:round}
+.chart .raw{stroke:var(--muted);stroke-width:1;opacity:.6}
+.chart .ma{stroke:var(--accent);stroke-width:2.5}
+.chart circle{fill:var(--muted)}
 @media (prefers-reduced-motion:reduce){.fill,.pin,.side{transition:none}}
 </style>
 </head>
@@ -128,6 +154,7 @@ li>div:last-child{display:flex;align-items:center;gap:4px;flex-shrink:0;white-sp
     <input type="date" id="date" aria-label="Day">
     <button class="icon" id="next" aria-label="Next day">›</button>
     <button class="btn ghost sm" id="todayBtn">Today</button>
+    <button class="btn ghost sm" id="trBtn" aria-pressed="false">Trends</button>
     <button class="btn ghost sm" id="setBtn" aria-expanded="false" aria-controls="settings">Settings</button>
   </div>
 </header>
@@ -140,6 +167,11 @@ li>div:last-child{display:flex;align-items:center;gap:4px;flex-shrink:0;white-sp
     <div><label for="gMaint">Maintenance ceiling (kcal/day)</label><input id="gMaint" type="number" min="0" inputmode="numeric"></div>
     <div><label for="gCred">Workout calories counted</label>
       <select id="gCred"><option value="100">All of them</option><option value="75">75%</option><option value="50">Half</option><option value="25">25%</option><option value="0">None</option></select></div>
+  </div>
+  <div class="goals" style="margin-top:12px">
+    <div><label for="gWater">Water goal (oz/day)</label><input id="gWater" type="number" min="0" inputmode="numeric"></div>
+    <div><label for="gSteps">Step goal (steps/day)</label><input id="gSteps" type="number" min="0" inputmode="numeric"></div>
+    <div><label for="gSleep">Sleep goal (hours/night)</label><input id="gSleep" type="number" min="0" step="0.25" inputmode="decimal"></div>
   </div>
   <p class="note">Watches and machines often overestimate burn, so counting only part of a workout is a safer way to lose steadily.</p>
   <details class="tg"><summary>Daily nutrition targets (optional)</summary><div class="ng" id="tGrid"></div></details>
@@ -161,6 +193,23 @@ li>div:last-child{display:flex;align-items:center;gap:4px;flex-shrink:0;white-sp
   </details>
 </section>
 
+<section id="trends" hidden>
+  <div class="panel" style="margin-bottom:16px">
+    <div class="sh" style="flex-wrap:wrap;gap:10px"><h2>Trends</h2>
+      <div class="btns" id="tRangeBtns"><button class="btn ghost sm" data-range="7" aria-pressed="false">7 days</button><button class="btn ghost sm" data-range="14" aria-pressed="true">14 days</button><button class="btn ghost sm" data-range="30" aria-pressed="false">30 days</button><button class="btn ghost sm" data-range="90" aria-pressed="false">90 days</button></div></div>
+    <p class="note" id="tRange"></p>
+    <div class="cards" id="tCards"></div>
+  </div>
+  <div class="panel" style="margin-bottom:16px"><h2>Estimated maintenance</h2><div id="tMaint"></div></div>
+  <div class="charts">
+    <section class="panel"><h2>Weight</h2><p class="note" style="margin:2px 0 0">Dots are weigh-ins, the thick line is the 7-day average.</p><div id="cWeight"></div></section>
+    <section class="panel"><h2>Net calories</h2><p class="note" style="margin:2px 0 0">Green is at or under the loss target, yellow is under maintenance.</p><div id="cCal"></div></section>
+    <section class="panel"><h2>Protein</h2><div id="cProt"></div></section>
+    <section class="panel"><h2>Water</h2><div id="cWater"></div></section>
+    <section class="panel"><h2>Steps</h2><div id="cSteps"></div></section>
+    <section class="panel"><h2>Sleep</h2><div id="cSleep"></div></section>
+  </div>
+</section>
 <div class="layout">
   <main class="col">
     <section class="panel hero" aria-live="polite">
@@ -186,6 +235,21 @@ li>div:last-child{display:flex;align-items:center;gap:4px;flex-shrink:0;white-sp
       <section class="panel"><h2>Eaten</h2><ul id="foodList2"></ul></section>
       <section class="panel"><h2>Workouts</h2><ul id="exList"></ul></section>
     </div>
+    <section class="panel">
+      <h2>Daily habits</h2>
+      <div class="habits">
+        <div><label for="waterIn">Water (oz)</label>
+          <div class="hrow"><input id="waterIn" type="number" min="0" step="1" inputmode="decimal"><span class="hg" id="waterGoal"></span></div>
+          <div class="pb"><i id="waterBar"></i></div>
+          <div class="btns" style="margin-top:8px"><button class="btn ghost sm" data-w="8">+8</button><button class="btn ghost sm" data-w="16">+16</button><button class="btn ghost sm" data-w="32">+32</button></div></div>
+        <div><label for="stepsIn">Steps</label>
+          <div class="hrow"><input id="stepsIn" type="number" min="0" step="1" inputmode="numeric"><span class="hg" id="stepsGoal"></span></div>
+          <div class="pb"><i id="stepsBar"></i></div></div>
+        <div><label for="sleepIn">Sleep last night (hours)</label>
+          <div class="hrow"><input id="sleepIn" type="number" min="0" step="0.25" inputmode="decimal"><span class="hg" id="sleepGoal"></span></div>
+          <div class="pb"><i id="sleepBar"></i></div></div>
+      </div>
+    </section>
     <div class="logs even">
       <section class="panel">
         <h2>Morning weight</h2>
@@ -193,6 +257,7 @@ li>div:last-child{display:flex;align-items:center;gap:4px;flex-shrink:0;white-sp
           <div><label for="wt">Weight for this day (lb)</label><input id="wt" type="number" min="0" step="0.1" inputmode="decimal" placeholder="294.6"></div>
           <div class="wstat"><b id="wAvg">–</b><span id="wAvgN">7-day average</span></div>
         </div>
+        <label class="wx"><input id="wx" type="checkbox"> Not a morning weight, leave it out of averages and trends</label>
         <p class="note" id="wChange" style="margin-top:8px"></p>
         <div id="wSpark"></div>
       </section>
@@ -279,7 +344,7 @@ const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'
 const r0=n=>Math.round(n).toLocaleString();
 const r1=n=>(Math.round(n*10)/10).toLocaleString();
 const ymd=d=>d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
-const norm=o=>{const x={goals:Object.assign({lose:2000,maint:2500,cred:100},(o&&o.goals)||{}),foods:(o&&o.foods)||{},days:(o&&o.days)||{}};x.goals.t=Object.assign({},x.goals.t);x.updated=(o&&o.updated)||0;return x};
+const norm=o=>{const x={goals:Object.assign({lose:2000,maint:2500,cred:100,water:100,steps:8000,sleep:7.5},(o&&o.goals)||{}),foods:(o&&o.foods)||{},days:(o&&o.days)||{}};x.goals.t=Object.assign({},x.goals.t);x.updated=(o&&o.updated)||0;return x};
 function load(){try{const r=localStorage.getItem(KEY);if(r)return norm(JSON.parse(r))}catch(e){}return norm({})}
 function persist(){try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}}
 function save(){S.updated=Date.now();persist();const sy=document.querySelector('#sync');
@@ -407,7 +472,9 @@ function render(){
   const wi=$('#wt'),ni=$('#note');
   if(document.activeElement!==wi)wi.value=d.wt!=null?d.wt:'';
   if(document.activeElement!==ni)ni.value=d.note||'';
-  wStats();
+  $('#wx').checked=!!d.wx;
+  wStats();habits();
+  if(!$('#trends').hidden)drawTrends();
 }
 
 // backup + restore
@@ -428,7 +495,7 @@ $('#imp').onchange=e=>{
       if(!o||typeof o!=='object'||typeof o.days!=='object')throw 0;
       S=norm(o);save();
       $('#gLose').value=S.goals.lose;$('#gMaint').value=S.goals.maint;$('#gCred').value=S.goals.cred;
-      setT();renderLib();render();say('Restored '+Object.keys(S.days).length+' days from '+f.name+'.');
+      setT();setG2();renderLib();render();say('Restored '+Object.keys(S.days).length+' days from '+f.name+'.');
     }catch(err){say('That file isn’t a Calorie Keeper backup.')}
     e.target.value='';
   };
@@ -540,7 +607,143 @@ $('#dSave').onclick=()=>{
   }
   save();renderLib();render();dlg.close();
 };
-function wOn(o){const d=new Date(day+'T12:00:00');d.setDate(d.getDate()+o);const x=S.days[ymd(d)];return x&&x.wt>0?x.wt:null}
+// ---------- habits ----------
+function setG2(){$('#gWater').value=S.goals.water||'';$('#gSteps').value=S.goals.steps||'';$('#gSleep').value=S.goals.sleep||''}
+[['#gWater','water'],['#gSteps','steps'],['#gSleep','sleep']].forEach(([id,k])=>$(id).addEventListener('input',()=>{S.goals[k]=parseFloat($(id).value)||0;save();render()}));
+setG2();
+const HB=[{k:'water',i:'#waterIn',b:'#waterBar',g:'#waterGoal',u:'oz'},{k:'steps',i:'#stepsIn',b:'#stepsBar',g:'#stepsGoal',u:'steps'},{k:'sleep',i:'#sleepIn',b:'#sleepBar',g:'#sleepGoal',u:'hr'}];
+HB.forEach(h=>$(h.i).addEventListener('input',()=>{const v=parseFloat($(h.i).value),d=dd();if(isNaN(v)||v<=0)delete d[h.k];else d[h.k]=v;save();habits()}));
+document.querySelectorAll('[data-w]').forEach(b=>{b.onclick=()=>{const d=dd();d.water=(d.water||0)+parseFloat(b.dataset.w);save();habits()}});
+function habits(){
+  const d=S.days[day]||{};
+  HB.forEach(h=>{
+    const v=d[h.k]||0,g=S.goals[h.k]||0,el=$(h.i);
+    if(document.activeElement!==el)el.value=v?v:'';
+    $(h.g).textContent=g?'/ '+r1(g)+' '+h.u:h.u;
+    $(h.b).style.width=(g?Math.min(100,v/g*100):0)+'%';
+    $(h.b).classList.toggle('done',g>0&&v>=g);
+  });
+}
+$('#wx').addEventListener('change',()=>{const d=dd();if($('#wx').checked)d.wx=1;else delete d.wx;save();wStats();if(!$('#trends').hidden)drawTrends()});
+
+// ---------- trends ----------
+const addDays=(ds,n)=>{const d=new Date(ds+'T12:00:00');d.setDate(d.getDate()+n);return ymd(d)};
+const avgOf=a=>a.length?a.reduce((x,y)=>x+y,0)/a.length:null;
+const shortD=ds=>(+ds.slice(5,7))+'/'+(+ds.slice(8));
+const endDate=()=>day===ymd(new Date())?addDays(day,-1):day;
+let RANGE=14;
+function dayStats(ds){
+  const d=S.days[ds];if(!d)return null;
+  const food=d.food||[],ex=d.ex||[];
+  const eaten=food.reduce((a,x)=>a+x.kcal,0),burn=ex.reduce((a,x)=>a+x.kcal,0);
+  let p=0;food.forEach(x=>{if(x.n&&x.n.p)p+=x.n.p});
+  const cred=burn*S.goals.cred/100;
+  return {d,eaten,burn,cred,net:eaten-cred,p,full:eaten>=800};
+}
+function slopeOf(pts){
+  if(pts.length<2)return null;
+  const mx=avgOf(pts.map(p=>p[0])),my=avgOf(pts.map(p=>p[1]));
+  let a=0,b=0;pts.forEach(([x,y])=>{a+=(x-mx)*(y-my);b+=(x-mx)*(x-mx)});
+  return b?a/b:null;
+}
+function niceStep(r){const p=Math.pow(10,Math.floor(Math.log10(r))),f=r/p;return(f<=1?1:f<=2?2:f<=5?5:10)*p}
+const fmtY=v=>Math.abs(v)>=10000?Math.round(v/1000)+'k':Math.abs(v)>=1000?(+(v/1000).toFixed(1))+'k':String(+v.toFixed(1));
+function chart(id,o){
+  const el=$('#'+id),W=Math.max(300,Math.round(el.clientWidth)||560),H=180,L=40,R=10,T=12,B=24,pw=W-L-R,ph=H-T-B,n=o.dates.length;
+  if(!o.vals.some(v=>v!=null)){el.innerHTML='<p class="note">No data in this range yet.</p>';return}
+  const all=o.vals.concat(o.ma||[],(o.lines||[]).map(l=>l.v)).filter(v=>v!=null);
+  let lo=o.bar?0:Math.min(...all),hi=Math.max(...all);
+  if(o.bar)hi*=1.1;else{const pad=Math.max((hi-lo)*.2,1);lo-=pad;hi+=pad}
+  if(hi<=lo)hi=lo+1;
+  const step=niceStep((hi-lo)/4),X=i=>o.bar?L+(i+.5)/n*pw:L+(n===1?pw/2:i/(n-1)*pw),Y=v=>T+(1-(v-lo)/(hi-lo))*ph;
+  let s=`<svg class="chart" viewBox="0 0 ${W} ${H}" role="img" aria-label="${esc(o.label)}">`;
+  for(let k=Math.ceil(lo/step);k<=Math.floor(hi/step);k++){const v=k*step,y=Y(v).toFixed(1);s+=`<line class="gl" x1="${L}" x2="${W-R}" y1="${y}" y2="${y}"/><text x="${L-5}" y="${+y+3}" text-anchor="end">${fmtY(v)}</text>`}
+  const tick=Math.max(1,Math.ceil(n/6));
+  for(let i=0;i<n;i+=tick)s+=`<text x="${X(i).toFixed(1)}" y="${H-6}" text-anchor="middle">${shortD(o.dates[i])}</text>`;
+  if(o.bar){
+    const bw=Math.max(2,pw/n*.7);
+    o.vals.forEach((v,i)=>{if(v==null)return;const y=Y(v),h=Math.max(1,T+ph-y);
+      s+=`<rect class="bar ${o.cls?o.cls(v):''}" x="${(X(i)-bw/2).toFixed(1)}" y="${y.toFixed(1)}" width="${bw.toFixed(1)}" height="${h.toFixed(1)}" rx="2"><title>${shortD(o.dates[i])}: ${o.fmt(v)} ${o.unit}</title></rect>`});
+  }else{
+    const pts=o.vals.map((v,i)=>v==null?null:[X(i),Y(v),v,i]).filter(Boolean);
+    s+=`<polyline class="ln raw" points="${pts.map(p=>p[0].toFixed(1)+','+p[1].toFixed(1)).join(' ')}"/>`;
+    const mp=(o.ma||[]).map((v,i)=>v==null?null:[X(i),Y(v)]).filter(Boolean);
+    if(mp.length>1)s+=`<polyline class="ln ma" points="${mp.map(p=>p[0].toFixed(1)+','+p[1].toFixed(1)).join(' ')}"/>`;
+    pts.forEach(p=>{s+=`<circle cx="${p[0].toFixed(1)}" cy="${p[1].toFixed(1)}" r="3"><title>${shortD(o.dates[p[3]])}: ${o.fmt(p[2])} ${o.unit}</title></circle>`});
+  }
+  (o.lines||[]).forEach(l=>{if(l.v>lo&&l.v<hi){const y=Y(l.v).toFixed(1);s+=`<line class="goal" x1="${L}" x2="${W-R}" y1="${y}" y2="${y}"/><text x="${W-R-2}" y="${+y-3}" text-anchor="end">${l.t}</text>`}});
+  el.innerHTML=s+'</svg>';
+}
+const card=(l,v,sub)=>`<div class="card"><b>${v}</b><span>${l}</span>${sub?`<small>${sub}</small>`:''}</div>`;
+function estMaint(){
+  const end=endDate(),dates=[];for(let i=27;i>=0;i--)dates.push(addDays(end,-i));
+  const st=dates.map(dayStats),full=st.filter(x=>x&&x.full);
+  const pts=[];dates.forEach((ds,i)=>{const d=S.days[ds];if(d&&d.wt>0&&!d.wx)pts.push([i,d.wt])});
+  const span=pts.length?pts[pts.length-1][0]-pts[0][0]:0,info={days:full.length,weigh:pts.length,span};
+  if(full.length<10||pts.length<5||span<10)return Object.assign({ok:false},info);
+  const intake=avgOf(full.map(x=>x.eaten)),credit=avgOf(full.map(x=>x.cred)),slope=slopeOf(pts);
+  const tdee=intake-slope*3500;
+  return Object.assign({ok:true,intake,credit,slope,weekly:slope*7,tdee,suggested:tdee-credit,good:span>=21&&full.length>=18},info);
+}
+function drawMaint(){
+  const e=estMaint(),box=$('#tMaint');
+  if(!e.ok){box.innerHTML=`<p class="note" style="margin-top:6px">Not enough data yet. It needs about 10 days of complete food logs and at least 5 weigh-ins spread over 10 or more days within the last 4 weeks. You have ${e.days} logged day${e.days===1?'':'s'} and ${e.weigh} weigh-in${e.weigh===1?'':'s'}${e.weigh>1?' over '+e.span+' days':''} so far.</p>`;return}
+  const sug=Math.round(e.suggested/10)*10,wk=(e.weekly>0?'+':e.weekly<0?'\u2212':'')+r1(Math.abs(e.weekly))+' lb/wk';
+  box.innerHTML=`<div class="cards">${card('Estimated daily burn',r0(e.tdee)+' kcal','including your training')}${card('Suggested maintenance setting',r0(sug),'yours is '+r0(S.goals.maint))}${card('Weight trend',wk,'last 4 weeks')}${card('Average eaten',r0(e.intake)+' kcal',e.days+' logged days')}</div>
+  <p class="note">This works backward from what you ate and what your weight did, using about 3,500 calories per pound. The suggested setting subtracts the workout calories you credit, so it matches how the main screen compares your net calories. ${e.good?'You have enough data for a fairly solid estimate.':'Treat this as rough until you have 3 to 4 weeks of steady logging.'} Water swings add noise: a 1 lb error in weight change over 3 weeks shifts it by about 170 calories a day.</p>
+  <div class="btns" style="margin-top:10px"><button class="btn sm" data-apply="${sug}">Use ${r0(sug)} as my maintenance</button></div>`;
+}
+function drawTrends(){
+  const end=endDate(),dates=[];for(let i=RANGE-1;i>=0;i--)dates.push(addDays(end,-i));
+  const g=S.goals,st=dates.map(dayStats),full=st.filter(x=>x&&x.full);
+  const lose=Math.min(g.lose,g.maint),maint=Math.max(g.lose,g.maint);
+  $('#tRange').textContent='Showing '+RANGE+' days through '+new Date(end+'T12:00:00').toLocaleDateString(undefined,{month:'short',day:'numeric'})+(day===ymd(new Date())?'. Today isn\u2019t counted until it\u2019s over.':'.');
+  const wts=dates.map(ds=>{const d=S.days[ds];return d&&d.wt>0&&!d.wx?d.wt:null});
+  const ma=dates.map(ds=>{const v=[];for(let o=0;o<7;o++){const d=S.days[addDays(ds,-o)];if(d&&d.wt>0&&!d.wx)v.push(d.wt)}return avgOf(v)});
+  const pts=[];wts.forEach((w,i)=>{if(w!==null)pts.push([i,w])});
+  const sl=pts.length>=3&&pts[pts.length-1][0]-pts[0][0]>=4?slopeOf(pts)*7:null;
+  const habit=k=>dates.map((ds,i)=>st[i]&&st[i].d[k]>0?st[i].d[k]:null);
+  const A=(a,f)=>{const v=a.filter(x=>x!=null);return v.length?f(avgOf(v)):'\u2013'};
+  const lastMa=ma.filter(x=>x!=null).pop();
+  const under=full.filter(x=>x.net<=lose).length;
+  $('#tCards').innerHTML=[
+    card('Avg eaten',A(full.map(x=>x.eaten),v=>r0(v)+' kcal'),full.length+' logged days'),
+    card('Avg net',A(full.map(x=>x.net),v=>r0(v)+' kcal'),'goal '+r0(lose)),
+    card('Days at or under target',full.length?under+' of '+full.length:'\u2013','loss target '+r0(lose)),
+    card('Avg protein',A(full.map(x=>x.p),v=>r0(v)+' g'),g.t&&g.t.p?'goal '+g.t.p+' g':''),
+    card('Weight trend',sl==null?'\u2013':(sl>0?'+':sl<0?'\u2212':'')+r1(Math.abs(sl))+' lb/wk','from your weigh-ins'),
+    card('7-day avg weight',lastMa==null?'\u2013':r1(lastMa)+' lb',''),
+    card('Avg steps',A(habit('steps'),v=>r0(v)),g.steps?'goal '+r0(g.steps):''),
+    card('Avg water',A(habit('water'),v=>r0(v)+' oz'),g.water?'goal '+r0(g.water)+' oz':''),
+    card('Avg sleep',A(habit('sleep'),v=>r1(v)+' hr'),g.sleep?'goal '+r1(g.sleep)+' hr':'')
+  ].join('');
+  drawMaint();
+  const goalCls=gl=>v=>gl>0&&v>=gl?'go':'';
+  chart('cWeight',{dates,vals:wts,ma,unit:'lb',fmt:r1,label:'Weight over time'});
+  chart('cCal',{dates,vals:st.map(x=>x&&x.eaten>0?x.net:null),bar:1,unit:'net kcal',fmt:r0,label:'Net calories per day',lines:[{v:lose,t:'loss target'},{v:maint,t:'maintenance'}],cls:v=>v<=lose?'go':v<=maint?'mid':'over'});
+  chart('cProt',{dates,vals:st.map(x=>x&&x.p>0?x.p:null),bar:1,unit:'g',fmt:r0,label:'Protein per day',lines:g.t&&g.t.p>0?[{v:g.t.p,t:'goal'}]:[],cls:goalCls(g.t&&g.t.p)});
+  chart('cWater',{dates,vals:habit('water'),bar:1,unit:'oz',fmt:r0,label:'Water per day',lines:g.water>0?[{v:g.water,t:'goal'}]:[],cls:goalCls(g.water)});
+  chart('cSteps',{dates,vals:habit('steps'),bar:1,unit:'steps',fmt:r0,label:'Steps per day',lines:g.steps>0?[{v:g.steps,t:'goal'}]:[],cls:goalCls(g.steps)});
+  chart('cSleep',{dates,vals:habit('sleep'),bar:1,unit:'hr',fmt:r1,label:'Sleep per night',lines:g.sleep>0?[{v:g.sleep,t:'goal'}]:[],cls:goalCls(g.sleep)});
+}
+$('#trBtn').onclick=()=>{
+  const on=$('#trends').hidden;
+  $('#trends').hidden=!on;document.querySelector('.layout').hidden=on;$('#fab').hidden=on;closeSheet();
+  $('#trBtn').setAttribute('aria-pressed',String(on));$('#trBtn').textContent=on?'Back to today':'Trends';
+  if(on)drawTrends();
+};
+document.querySelectorAll('[data-range]').forEach(b=>{b.onclick=()=>{
+  RANGE=+b.dataset.range;
+  document.querySelectorAll('[data-range]').forEach(x=>x.setAttribute('aria-pressed',String(x===b)));
+  drawTrends();
+}});
+document.addEventListener('click',e=>{
+  const a=e.target.closest('[data-apply]');if(!a)return;
+  S.goals.maint=+a.dataset.apply;$('#gMaint').value=S.goals.maint;save();render();
+});
+let rzT=null;window.addEventListener('resize',()=>{if(!$('#trends').hidden){clearTimeout(rzT);rzT=setTimeout(drawTrends,150)}});
+
+function wOn(o){const d=new Date(day+'T12:00:00');d.setDate(d.getDate()+o);const x=S.days[ymd(d)];return x&&x.wt>0&&!x.wx?x.wt:null}
 function wAvg(a,b){const v=[];for(let o=a;o<=b;o++){const w=wOn(o);if(w!==null)v.push(w)}return v.length?{avg:v.reduce((x,y)=>x+y,0)/v.length,n:v.length}:null}
 function wStats(){
   const cur=wAvg(-6,0),prev=wAvg(-13,-7);
@@ -580,7 +783,7 @@ async function boot(){
     if(S.updated>remote.updated){if(autoOn()){sync.textContent='Saving your unsynced changes to GitHub…';ghQueue()}else sync.textContent='You have changes in this browser that aren’t on GitHub yet. Use Save to GitHub in Settings to keep them.';return}
     S=remote;persist();
     $('#gLose').value=S.goals.lose;$('#gMaint').value=S.goals.maint;$('#gCred').value=S.goals.cred;
-    setT();renderLib();render();
+    setT();setG2();renderLib();render();
   }catch(e){sync.textContent='Couldn\u2019t read calorie-data.json next to this page, so you\u2019re seeing what\u2019s saved in this browser.'}
 }
 fillAmountUnits();renderLib();render();updCalc();
