@@ -10,6 +10,7 @@ Enter foods the way their labels list them, say how much you actually ate, and i
 - Enter a food's label serving (for example 46 g = 160 kcal) and the amount you actually ate (for example 250 g). Calories and nutrition scale automatically.
 - Units: grams, ounces, pounds, kilograms, milliliters, fluid ounces, cups, tablespoons, teaspoons, and piece/serving. The amount you ate must be the same kind of unit as the label serving (weight with weight, volume with volume).
 - **Saved foods:** every food you log is remembered. Search the list, tap Use, and enter only the amount.
+- **Editing:** tap Edit on a saved food to change its name, serving, calories or nutrition, or Edit on a logged entry to fix that day's numbers. In a logged entry, Recalculate from saved food refills the totals after you update the saved version, which is handy for adding missing sodium.
 - **Quick add:** log a restaurant meal or anything without a label with just a name and total calories, plus optional protein, carbs and fat.
 - Optional nutrition per food: protein, carbs, fat, fiber, sugar and sodium.
 
@@ -18,6 +19,28 @@ Enter foods the way their labels list them, say how much you actually ate, and i
 - Choose how much of your workout calories count (all, 75%, half, 25% or none). Watches tend to overestimate burn, so counting only part is a safer way to lose steadily.
 - Set a **weight-loss target** and a **maintenance ceiling**. A gauge shows net calories (eaten minus credited workout calories) against both.
 - Optional daily nutrition goals (protein, carbs, fat, fiber) and limits (sugar, sodium) with progress bars.
+
+**Weight and notes**
+- **Morning weight:** enter your weight for each day. The page shows the 7-day average, the change compared with the 7 days before, and a small chart of the last two weeks. Weights are in pounds.
+- **Notes:** a free-text box for each day, for sleep, hunger, how a workout felt, or anything else worth remembering.
+
+**Daily habits**
+- **Water:** log ounces with +8, +16 and +32 buttons, or type a total.
+- **Steps:** type your daily step count (for example from your watch).
+- **Sleep:** hours slept the night before the day you are viewing.
+- Each shows a progress bar against a goal you can change in Settings. The defaults are 100 oz of water, 8,000 steps and 7.5 hours of sleep, which are only starting points.
+
+**Trends**
+- The **Trends** button switches to a view with 7, 14, 30 or 90 days of history ending on the day you are viewing (or yesterday, when you are viewing today, so an unfinished day doesn't skew the averages).
+- Summary cards show average calories eaten and net, days at or under your loss target, average protein, your weight trend in pounds per week, and average steps, water and sleep.
+- Charts cover weight (with a 7-day average line), net calories against your loss and maintenance lines, protein, water, steps and sleep. Bars turn green when they reach their goal. Hover or tap a bar or dot to see the exact value.
+- Only days with at least 800 calories logged count as complete days in the averages, so a day you barely logged doesn't drag them down.
+
+**Estimated maintenance**
+- After about 10 complete logged days and 5 weigh-ins spread over 10 or more days in the last 4 weeks, Trends estimates your real daily burn from what you ate and what your weight did, using about 3,500 calories per pound.
+- It then suggests a maintenance setting that matches how the main screen compares net calories (your burn minus the workout calories you credit). One click applies it, or you can ignore it.
+- Treat it as rough until you have 3 to 4 weeks of steady logging. Water swings add noise: a 1 lb error in weight change over 3 weeks shifts the estimate by about 170 calories a day.
+- If a weigh-in isn't a true morning weight, tick **Not a morning weight** under the weight box to leave it out of the averages, trend and estimate.
 
 **Layout**
 - Today's summary and your food and workout logs are on the main screen. A tabbed add panel stays in view on wide screens, and opens as a bottom sheet from a **+ Add** button on phones.
@@ -66,7 +89,12 @@ On every load the page reads `calorie-data.json` and compares it with the browse
         { "id": "abc123", "name": "Chicken Wings", "amt": 16.2, "unit": "oz",
           "kcal": 850.5, "n": { "p": 81, "c": 0, "f": 56.7 } }
       ],
-      "ex": [ { "id": "def456", "name": "Morning Strength Training", "kcal": 350 } ]
+      "ex": [ { "id": "def456", "name": "Morning Strength Training", "kcal": 350 } ],
+      "wt": 294.6,
+      "water": 88,
+      "steps": 8450,
+      "sleep": 7.25,
+      "note": "Slept well, low appetite after lunch."
     }
   }
 }
@@ -76,6 +104,8 @@ On every load the page reads `calorie-data.json` and compares it with the browse
 - `goals.t` holds optional nutrition goals keyed `p`, `c`, `f`, `fi`, `su`, `na`.
 - Nutrition keys: `p` protein, `c` carbs, `f` fat, `fi` fiber, `su` sugar (g), `na` sodium (mg).
 - Food entries inside a day store the already-scaled totals for what you ate.
+- `wt` is that day's morning weight in pounds, `wx` (set to 1) leaves that weigh-in out of averages, and `note` is that day's note. All are optional.
+- `water` (oz), `steps` and `sleep` (hours) are that day's habit values, also optional. `goals.water`, `goals.steps` and `goals.sleep` hold the habit goals.
 
 ## Setup on GitHub Pages
 
@@ -108,6 +138,8 @@ The page commits the file for you using a GitHub personal access token.
 
 Each save creates a normal commit in your repo, so the commit history doubles as a backup of every version.
 
+**Automatic syncing.** Once the token is set, the page saves to GitHub by itself about a second after each change (adding or deleting food or workouts, or editing targets). A line at the top shows "Saving to GitHub…" and then "Synced to GitHub". You can turn this off with the **Sync to GitHub automatically** checkbox in the GitHub saving setup, and the manual Save to GitHub button always works too. Every change is its own commit, so expect a long commit history.
+
 Safety notes:
 - The token is stored only in this browser's local storage. It is never written into the data file or the repo.
 - Never paste the token into `index.html` or any file you commit.
@@ -130,7 +162,7 @@ Free GitHub Pages requires a **public** repo, which means anyone can read `calor
 | Changes don't appear after saving | Pages can take a minute or two to republish. Your own browser keeps your latest changes in the meantime. |
 | "GitHub error 401" | The token is wrong or expired. Make a new one. |
 | "GitHub error 403/404" | Check the repo name and branch, and that the token has Contents read and write access to this repo. |
-| "GitHub has newer data" | Another device saved first. Reload to load it, or download your current changes before reloading so nothing is lost. |
+| "GitHub has newer data" | Another device or browser saved after this page loaded, so saving pauses instead of overwriting it. Download your current changes if you want to keep them, then reload to load the newer data. |
 | "Couldn't read calorie-data.json" | The file must sit in the same folder as `index.html`. This message is also normal when opening the page directly from your computer. |
 | Page looks wrong after an update | Hard refresh (Ctrl/Cmd + Shift + R) to bypass the browser cache. |
 | Lost changes after switching browsers | Unsaved changes live only in the browser they were made in. Use Save to GitHub before switching. |
