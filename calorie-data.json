@@ -762,6 +762,15 @@
           "kcal": 180,
           "n": {},
           "quick": 1
+        },
+        {
+          "id": "mwwxjiysdsnq",
+          "name": "DInner",
+          "amt": 1,
+          "unit": "each",
+          "kcal": 1300,
+          "n": {},
+          "quick": 1
         }
       ],
       "ex": [
@@ -775,5 +784,5 @@
       "note": "5am was easy but didnt want to be awake... but got there. \n\nShoulders and back at the gym today. It was hard. Im under eating for sure so I need to do better for better recovery."
     }
   },
-  "updated": 1795636493993
+  "updated": 1795659900868
 }
