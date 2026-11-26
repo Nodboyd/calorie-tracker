@@ -4,7 +4,7 @@
     "maint": 2500,
     "cred": 25,
     "water": 100,
-    "steps": 8000,
+    "steps": 10000,
     "sleep": 7.5,
     "t": {
       "na": 2000,
@@ -790,5 +790,5 @@
       "note": "Slept in, rest day, gonna walk on treadmill, play games, and go see a movie\n\nHappy thanks giving"
     }
   },
-  "updated": 1795714203103
+  "updated": 1795714219074
 }
