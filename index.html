@@ -157,6 +157,10 @@ li>div:last-child{display:flex;align-items:center;gap:4px;flex-shrink:0;white-sp
   .cl .hero{grid-template-columns:minmax(0,1fr)}
   .habits{grid-template-columns:minmax(0,1fr)}
 }
+.sub{font-size:.95rem;font-weight:600;margin:16px 0 0}
+#rList{margin-top:4px}
+#rList li{padding:8px 0}
+.tabs button{font-size:.88rem;padding:8px 2px}
 @media (prefers-reduced-motion:reduce){.fill,.pin,.side{transition:none}}
 </style>
 </head>
@@ -289,7 +293,8 @@ li>div:last-child{display:flex;align-items:center;gap:4px;flex-shrink:0;white-sp
     <div class="tabs" role="tablist">
       <button data-tab="saved" role="tab" aria-selected="true">Saved</button>
       <button data-tab="food" role="tab" aria-selected="false">New food</button>
-      <button data-tab="quick" role="tab" aria-selected="false">Quick add</button>
+      <button data-tab="quick" role="tab" aria-selected="false">Quick</button>
+      <button data-tab="recipe" role="tab" aria-selected="false">Recipe</button>
       <button data-tab="ex" role="tab" aria-selected="false">Workout</button>
     </div>
 
@@ -326,6 +331,29 @@ li>div:last-child{display:flex;align-items:center;gap:4px;flex-shrink:0;white-sp
       <label style="display:flex;gap:8px;align-items:center;margin:0 0 12px"><input id="qSave" type="checkbox" style="width:auto"> Save to my foods for next time</label>
       <button class="btn" id="qAdd">Add to today</button>
       <p class="note" id="qErr" role="alert"></p>
+    </div>
+
+    <div data-pane="recipe" hidden>
+      <div class="row"><div><label for="rName">Recipe name</label><input id="rName" placeholder="Mashed potatoes" autocomplete="off"></div></div>
+      <h3 class="sub">Ingredients</h3>
+      <ul id="rList"></ul>
+      <div class="row" style="margin-top:12px"><div><label for="rIng">Add an ingredient</label><input id="rIng" list="foodList" placeholder="Search your saved foods" autocomplete="off"></div></div>
+      <div class="row r2"><div><label for="rAmt">Amount used</label><input id="rAmt" type="number" min="0" step="any" inputmode="decimal"></div><div><label for="rUnit">Unit</label><select id="rUnit"></select></div></div>
+      <details class="more"><summary>Not in your saved foods? Enter its calories</summary>
+        <div class="ng"><div><label for="rK">Calories (this amount)</label><input id="rK" type="number" min="0" step="any" inputmode="decimal"></div>
+        <div><label for="rP">Protein (g)</label><input id="rP" type="number" min="0" step="any" inputmode="decimal"></div>
+        <div><label for="rC">Carbs (g)</label><input id="rC" type="number" min="0" step="any" inputmode="decimal"></div>
+        <div><label for="rF">Fat (g)</label><input id="rF" type="number" min="0" step="any" inputmode="decimal"></div></div>
+      </details>
+      <button class="btn ghost" id="rAdd">Add ingredient</button>
+      <div class="preview" style="margin-top:14px"><span>Whole dish</span><b id="rTot">0 kcal</b></div>
+      <p class="note" id="rTotN" style="margin:0 0 12px"></p>
+      <div class="row r2"><div><label for="rWeight">Finished weight, whole dish (g)</label><input id="rWeight" type="number" min="0" step="any" inputmode="decimal"></div>
+      <div><label for="rPlate">What’s on my plate (g)</label><input id="rPlate" type="number" min="0" step="any" inputmode="decimal"></div></div>
+      <div class="preview"><span>My plate</span><b id="rPlateK">–</b></div>
+      <p class="note" id="rPlateN" style="margin:0 0 12px"></p>
+      <div class="btns"><button class="btn" id="rLog">Add plate to today</button><button class="btn ghost" id="rSave">Save recipe</button><button class="btn ghost sm" id="rClear">Clear</button></div>
+      <p class="note" id="rErr" role="alert"></p>
     </div>
 
     <div data-pane="ex" hidden>
@@ -404,7 +432,7 @@ function renderLib(){
   const q=$('#sFilter').value.trim().toLowerCase();
   const shown=keys.filter(k=>!q||k.includes(q));
   $('#savedList').innerHTML=shown.length?shown.map(k=>{const f=S.foods[k];
-    return `<li><div>${esc(f.name||k)}<small>${r0(f.kcal)} kcal per ${+f.size} ${SH[f.unit]||''}${macroStr(f.n)}</small></div><div><button class="btn ghost sm" data-use="${esc(k)}">Use</button><button class="del ed" data-sedit="${esc(k)}" aria-label="Edit ${esc(f.name||k)}">Edit</button><button class="del" data-forget="${esc(k)}" aria-label="Remove ${esc(f.name||k)} from saved foods">×</button></div></li>`}).join(''):`<li class="empty" style="border:0;padding-left:0">${keys.length?'No saved foods match that search.':'Foods you add will be saved here so you only enter them once.'}</li>`;
+    return `<li><div>${esc(f.name||k)}<small>${r0(f.kcal)} kcal per ${+f.size} ${SH[f.unit]||''}${macroStr(f.n)}${f.r?' · recipe':''}</small></div><div><button class="btn ghost sm" data-use="${esc(k)}">Use</button><button class="del ed" data-sedit="${esc(k)}" aria-label="Edit ${esc(f.name||k)}">Edit</button><button class="del" data-forget="${esc(k)}" aria-label="Remove ${esc(f.name||k)} from saved foods">×</button></div></li>`}).join(''):`<li class="empty" style="border:0;padding-left:0">${keys.length?'No saved foods match that search.':'Foods you add will be saved here so you only enter them once.'}</li>`;
 }
 
 $('#fName').addEventListener('input',()=>{
@@ -580,7 +608,7 @@ $('#dNut').innerHTML=N.map(d=>`<div><label for="d_${d.k}">${d.l} (${d.u})</label
 function openEdit(mode,ref){
   let name,qty,unit,kcal,n;
   if(mode==='entry'){const x=dd().food.find(f=>f.id===ref);if(!x)return;name=x.name;qty=x.amt;unit=x.unit;kcal=x.kcal;n=x.n||{}}
-  else{const f=S.foods[ref];if(!f)return;name=f.name||ref;qty=f.size;unit=f.unit;kcal=f.kcal;n=f.n||{}}
+  else{const f=S.foods[ref];if(!f)return;if(f.r){editRecipe(ref);return}name=f.name||ref;qty=f.size;unit=f.unit;kcal=f.kcal;n=f.n||{}}
   EDIT={mode,ref};
   const e=mode==='entry';
   $('#dTitle').textContent=e?'Edit logged food':'Edit saved food';
@@ -622,6 +650,91 @@ $('#dSave').onclick=()=>{
   }
   save();renderLib();render();dlg.close();
 };
+// ---------- recipes ----------
+const RCP={ing:[],editKey:null};
+const FAM={w:'weight',v:'volume',c:'piece'};
+let rLast='';
+$('#rUnit').innerHTML=allOpts;
+function rUnits(){
+  const key=$('#rIng').value.trim().toLowerCase(),f=S.foods[key],cur=$('#rUnit').value;
+  const keys=f?Object.keys(U).filter(k=>U[k].f===U[f.unit].f):Object.keys(U);
+  $('#rUnit').innerHTML=keys.map(k=>`<option value="${k}">${U[k].l}</option>`).join('');
+  $('#rUnit').value=(f&&key!==rLast)?f.unit:(keys.includes(cur)?cur:(f?f.unit:'g'));
+  rLast=f?key:'';
+}
+$('#rIng').addEventListener('input',rUnits);
+function ingFromInputs(){
+  const name=$('#rIng').value.trim(),amt=parseFloat($('#rAmt').value),u=$('#rUnit').value;
+  if(!name||!(amt>0))return {err:'Enter an ingredient and the amount you used.'};
+  const f=S.foods[name.toLowerCase()];
+  if(f){
+    if(U[u].f!==U[f.unit].f)return {err:'Use a '+FAM[U[f.unit].f]+' unit for '+(f.name||name)+', since that is how it is saved.'};
+    const fac=amt*U[u].k/(f.size*U[f.unit].k);
+    return {item:{name:f.name||name,amt,unit:u,kcal:f.kcal*fac,n:scaleN(f.n||{},fac)}};
+  }
+  const k=parseFloat($('#rK').value);
+  if(isNaN(k)||k<0)return {err:'“'+name+'” isn’t in your saved foods. Enter its calories in the box below, or save it first under New food.'};
+  const n={};[['p','rP'],['c','rC'],['f','rF']].forEach(([key,id])=>{const v=parseFloat($('#'+id).value);if(!isNaN(v)&&v>=0)n[key]=v});
+  return {item:{name,amt,unit:u,kcal:k,n}};
+}
+function rSum(){const t={kcal:0,n:{}};RCP.ing.forEach(x=>{t.kcal+=x.kcal;for(const k in x.n)t.n[k]=(t.n[k]||0)+x.n[k]});return t}
+const nStr=n=>N.filter(d=>n[d.k]!=null).map(d=>d.l+' '+r1(n[d.k])+' '+d.u).join(' · ');
+function rCalc(needPlate){
+  const name=$('#rName').value.trim(),W=parseFloat($('#rWeight').value),P=parseFloat($('#rPlate').value),tot=rSum();
+  if(!name)return {msg:'Give the recipe a name.'};
+  if(!RCP.ing.length)return {msg:'Add at least one ingredient.'};
+  if(!(W>0))return {msg:'Enter the finished weight of the whole dish in grams.'};
+  if(needPlate&&!(P>0))return {msg:'Enter how many grams are on your plate.'};
+  const f=P>0?P/W:0;
+  return {name,W,P,tot,plate:{kcal:tot.kcal*f,n:scaleN(tot.n,f)}};
+}
+function renderR(){
+  $('#rList').innerHTML=RCP.ing.length?RCP.ing.map((x,i)=>`<li><div>${esc(x.name)}<small>${r1(x.amt)} ${SH[x.unit]||''}${macroStr(x.n)}</small></div><div><span class="k">${r0(x.kcal)} kcal</span><button class="del" data-rdel="${i}" aria-label="Remove ${esc(x.name)}">×</button></div></li>`).join(''):'<li class="empty" style="border:0;padding-left:0">No ingredients yet.</li>';
+  const t=rSum(),W=parseFloat($('#rWeight').value),P=parseFloat($('#rPlate').value);
+  $('#rTot').textContent=r0(t.kcal)+' kcal';
+  $('#rTotN').textContent=(W>0&&t.kcal>0?r0(t.kcal/W*100)+' kcal per 100 g · ':'')+nStr(t.n);
+  if(W>0&&P>0&&RCP.ing.length){const f=P/W;$('#rPlateK').textContent=r0(t.kcal*f)+' kcal';$('#rPlateN').textContent=nStr(scaleN(t.n,f))}
+  else{$('#rPlateK').textContent='–';$('#rPlateN').textContent=RCP.ing.length&&!(W>0)?'Weigh the finished dish, then subtract the empty pot, and enter it above.':''}
+}
+function saveRecipe(c){
+  const key=c.name.toLowerCase(),ex=S.foods[key];
+  if(ex&&!ex.r&&key!==RCP.editKey)return 'A saved food named “'+c.name+'” already exists. Pick a different recipe name.';
+  const k=100/c.W;
+  if(RCP.editKey&&RCP.editKey!==key)delete S.foods[RCP.editKey];
+  S.foods[key]={name:c.name,size:100,unit:'g',kcal:c.tot.kcal*k,n:scaleN(c.tot.n,k),r:{ing:RCP.ing.map(x=>Object.assign({},x)),w:c.W}};
+  RCP.editKey=key;return '';
+}
+function editRecipe(key){
+  const f=S.foods[key];if(!f||!f.r)return;
+  RCP.ing=f.r.ing.map(x=>Object.assign({},x));RCP.editKey=key;
+  $('#rName').value=f.name||key;$('#rWeight').value=f.r.w;$('#rPlate').value='';$('#rErr').textContent='';
+  tab('recipe');renderR();
+}
+$('#rAdd').onclick=()=>{
+  const r=ingFromInputs();
+  if(r.err){$('#rErr').textContent=r.err;return}
+  $('#rErr').textContent='';RCP.ing.push(r.item);
+  ['rIng','rAmt','rK','rP','rC','rF'].forEach(id=>{$('#'+id).value=''});rLast='';rUnits();renderR();$('#rIng').focus();
+};
+document.addEventListener('click',e=>{const b=e.target.closest('[data-rdel]');if(b){RCP.ing.splice(+b.dataset.rdel,1);renderR()}});
+['rWeight','rPlate'].forEach(id=>$('#'+id).addEventListener('input',renderR));
+$('#rSave').onclick=()=>{
+  const c=rCalc(false);if(c.msg){$('#rErr').textContent=c.msg;return}
+  const e=saveRecipe(c);if(e){$('#rErr').textContent=e;return}
+  save();renderLib();$('#rErr').textContent='Recipe saved to your foods.';
+};
+$('#rLog').onclick=()=>{
+  const c=rCalc(true);if(c.msg){$('#rErr').textContent=c.msg;return}
+  const e=saveRecipe(c);if(e){$('#rErr').textContent=e;return}
+  dd().food.push({id:uid(),name:c.name,amt:c.P,unit:'g',kcal:c.plate.kcal,n:c.plate.n,recipe:1});
+  $('#rErr').textContent='';save();renderLib();render();$('#rPlate').value='';renderR();afterAdd('rPlate');
+};
+$('#rClear').onclick=()=>{
+  RCP.ing=[];RCP.editKey=null;['rName','rWeight','rPlate','rIng','rAmt','rK','rP','rC','rF'].forEach(id=>{$('#'+id).value=''});
+  rLast='';rUnits();$('#rErr').textContent='';renderR();
+};
+rUnits();renderR();
+
 // ---------- habits ----------
 function setG2(){$('#gWater').value=S.goals.water||'';$('#gSteps').value=S.goals.steps||'';$('#gSleep').value=S.goals.sleep||''}
 [['#gWater','water'],['#gSteps','steps'],['#gSleep','sleep']].forEach(([id,k])=>$(id).addEventListener('input',()=>{S.goals[k]=parseFloat($(id).value)||0;save();render()}));
