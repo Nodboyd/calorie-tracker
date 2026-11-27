@@ -300,9 +300,9 @@
     },
     "russet potato": {
       "name": "Russet Potato",
-      "size": 173,
+      "size": 100,
       "unit": "g",
-      "kcal": 168,
+      "kcal": 79,
       "n": {}
     }
   },
@@ -811,5 +811,5 @@
       "note": "Slept in, rest day, gonna walk on treadmill, play games, and go see a movie\n\nHappy thanks giving"
     }
   },
-  "updated": 1795795724382
+  "updated": 1795795782240
 }
