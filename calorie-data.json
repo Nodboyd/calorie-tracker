@@ -837,19 +837,9 @@
       "note": "Slept in, rest day, gonna walk on treadmill, play games, and go see a movie\n\nHappy thanks giving"
     },
     "2026-11-27": {
-      "food": [
-        {
-          "id": "mwz78fhd9x3f",
-          "name": "Mashed Potatoes (11/27)",
-          "amt": 250,
-          "unit": "g",
-          "kcal": 111.875,
-          "n": {},
-          "recipe": 1
-        }
-      ],
+      "food": [],
       "ex": []
     }
   },
-  "updated": 1795797111649
+  "updated": 1795797118540
 }
