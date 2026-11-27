@@ -849,8 +849,14 @@
     },
     "2026-11-27": {
       "food": [],
-      "ex": []
+      "ex": [
+        {
+          "id": "mwz7bnhyw3gk",
+          "name": "Morning Treadmill + Weights",
+          "kcal": 400
+        }
+      ]
     }
   },
-  "updated": 1795797229472
+  "updated": 1795797262006
 }
