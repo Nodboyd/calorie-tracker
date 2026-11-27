@@ -304,32 +304,6 @@
       "unit": "g",
       "kcal": 79,
       "n": {}
-    },
-    "mashed potatoes (11/27)": {
-      "name": "Mashed Potatoes (11/27)",
-      "size": 100,
-      "unit": "g",
-      "kcal": 44.75,
-      "n": {},
-      "r": {
-        "ing": [
-          {
-            "name": "Russet Potato",
-            "amt": 200,
-            "unit": "g",
-            "kcal": 158,
-            "n": {}
-          },
-          {
-            "name": "Butter",
-            "amt": 100,
-            "unit": "g",
-            "kcal": 200,
-            "n": {}
-          }
-        ],
-        "w": 800
-      }
     }
   },
   "days": {
@@ -858,5 +832,5 @@
       ]
     }
   },
-  "updated": 1795797262006
+  "updated": 1795797277883
 }
