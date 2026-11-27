@@ -831,7 +831,17 @@
       "note": "5am was easy but didnt want to be awake... but got there. \n\nShoulders and back at the gym today. It was hard. Im under eating for sure so I need to do better for better recovery."
     },
     "2026-11-26": {
-      "food": [],
+      "food": [
+        {
+          "id": "mwz7as1l3qha",
+          "name": "Don't know actuals",
+          "amt": 1,
+          "unit": "each",
+          "kcal": 2500,
+          "n": {},
+          "quick": 1
+        }
+      ],
       "ex": [],
       "wt": 294.6,
       "note": "Slept in, rest day, gonna walk on treadmill, play games, and go see a movie\n\nHappy thanks giving"
@@ -841,5 +851,5 @@
       "ex": []
     }
   },
-  "updated": 1795797118540
+  "updated": 1795797221241
 }
