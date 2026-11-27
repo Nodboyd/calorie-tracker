@@ -283,6 +283,13 @@
         "su": 14.4,
         "na": 0
       }
+    },
+    "stove top turkey stuffing": {
+      "name": "Stove Top Turkey Stuffing",
+      "size": 0.5,
+      "unit": "cup",
+      "kcal": 150,
+      "n": {}
     }
   },
   "days": {
@@ -790,5 +797,5 @@
       "note": "Slept in, rest day, gonna walk on treadmill, play games, and go see a movie\n\nHappy thanks giving"
     }
   },
-  "updated": 1795714219074
+  "updated": 1795795569099
 }
