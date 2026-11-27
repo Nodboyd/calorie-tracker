@@ -304,6 +304,32 @@
       "unit": "g",
       "kcal": 79,
       "n": {}
+    },
+    "mashed potatoes (11/27)": {
+      "name": "Mashed Potatoes (11/27)",
+      "size": 100,
+      "unit": "g",
+      "kcal": 119.33333333333333,
+      "n": {},
+      "r": {
+        "ing": [
+          {
+            "name": "Russet Potato",
+            "amt": 200,
+            "unit": "g",
+            "kcal": 158,
+            "n": {}
+          },
+          {
+            "name": "Butter",
+            "amt": 100,
+            "unit": "g",
+            "kcal": 200,
+            "n": {}
+          }
+        ],
+        "w": 300
+      }
     }
   },
   "days": {
@@ -809,7 +835,21 @@
       "ex": [],
       "wt": 294.6,
       "note": "Slept in, rest day, gonna walk on treadmill, play games, and go see a movie\n\nHappy thanks giving"
+    },
+    "2026-11-27": {
+      "food": [
+        {
+          "id": "mwz772ywx6vy",
+          "name": "Mashed Potatoes (11/27)",
+          "amt": 150,
+          "unit": "g",
+          "kcal": 179,
+          "n": {},
+          "recipe": 1
+        }
+      ],
+      "ex": []
     }
   },
-  "updated": 1795795782240
+  "updated": 1795797048776
 }
