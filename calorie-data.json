@@ -304,6 +304,20 @@
       "unit": "g",
       "kcal": 79,
       "n": {}
+    },
+    "members mark turkey breast (whole)": {
+      "name": "Members Mark Turkey Breast (Whole)",
+      "size": 56,
+      "unit": "g",
+      "kcal": 60,
+      "n": {
+        "p": 13,
+        "c": 1,
+        "f": 0.5,
+        "fi": 0,
+        "su": 1,
+        "na": 430
+      }
     }
   },
   "days": {
@@ -834,5 +848,5 @@
       "sleep": 6.25
     }
   },
-  "updated": 1795797353033
+  "updated": 1795797520143
 }
