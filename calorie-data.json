@@ -836,7 +836,53 @@
       "steps": 10000
     },
     "2026-11-27": {
-      "food": [],
+      "food": [
+        {
+          "id": "mwz7k0ic44vi",
+          "name": "Oat Milk (Sams Club)",
+          "amt": 240,
+          "unit": "ml",
+          "kcal": 90,
+          "n": {
+            "p": 1,
+            "c": 16,
+            "f": 3,
+            "fi": 2,
+            "su": 6,
+            "na": 100
+          }
+        },
+        {
+          "id": "mwz7lb3i0peu",
+          "name": "Orgain Chocolate Peanut butter Protein Powder",
+          "amt": 46,
+          "unit": "g",
+          "kcal": 160,
+          "n": {
+            "p": 21,
+            "c": 15,
+            "f": 4.5,
+            "fi": 6,
+            "su": 1,
+            "na": 400
+          }
+        },
+        {
+          "id": "mwz7m1xk5ynb",
+          "name": "Banana",
+          "amt": 87,
+          "unit": "g",
+          "kcal": 77.41525423728814,
+          "n": {
+            "p": 0.9511016949152543,
+            "c": 19.833050847457628,
+            "f": 0.287542372881356,
+            "fi": 2.2634745762711863,
+            "su": 10.616949152542373,
+            "na": 0
+          }
+        }
+      ],
       "ex": [
         {
           "id": "mwz7bnhyw3gk",
@@ -848,5 +894,5 @@
       "sleep": 6.25
     }
   },
-  "updated": 1795797520143
+  "updated": 1795797747273
 }
