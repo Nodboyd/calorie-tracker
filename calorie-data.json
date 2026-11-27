@@ -309,7 +309,7 @@
       "name": "Mashed Potatoes (11/27)",
       "size": 100,
       "unit": "g",
-      "kcal": 119.33333333333333,
+      "kcal": 44.75,
       "n": {},
       "r": {
         "ing": [
@@ -328,7 +328,7 @@
             "n": {}
           }
         ],
-        "w": 300
+        "w": 800
       }
     }
   },
@@ -837,9 +837,19 @@
       "note": "Slept in, rest day, gonna walk on treadmill, play games, and go see a movie\n\nHappy thanks giving"
     },
     "2026-11-27": {
-      "food": [],
+      "food": [
+        {
+          "id": "mwz78fhd9x3f",
+          "name": "Mashed Potatoes (11/27)",
+          "amt": 250,
+          "unit": "g",
+          "kcal": 111.875,
+          "n": {},
+          "recipe": 1
+        }
+      ],
       "ex": []
     }
   },
-  "updated": 1795797109932
+  "updated": 1795797111649
 }
