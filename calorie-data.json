@@ -318,6 +318,13 @@
         "su": 1,
         "na": 430
       }
+    },
+    "members mark sweet cream butter": {
+      "name": "Members Mark Sweet Cream Butter",
+      "size": 1,
+      "unit": "tbsp",
+      "kcal": 100,
+      "n": {}
     }
   },
   "days": {
@@ -895,5 +902,5 @@
       "note": "Slept in a bit till 5:30 but didn't go to the gym for a bit after because I just wanted to chill and hang with chester in the morning.\n\nGood gym session, breakfast and now time to keep cleaning."
     }
   },
-  "updated": 1795799015742
+  "updated": 1795824687197
 }
