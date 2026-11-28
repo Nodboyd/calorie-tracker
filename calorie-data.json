@@ -958,6 +958,14 @@
           "unit": "cup",
           "kcal": 75,
           "n": {}
+        },
+        {
+          "id": "mwzq2u4hk1se",
+          "name": "Heinz Turkey Gravy",
+          "amt": 60,
+          "unit": "g",
+          "kcal": 25,
+          "n": {}
         }
       ],
       "ex": [
@@ -972,5 +980,5 @@
       "note": "Slept in a bit till 5:30 but didn't go to the gym for a bit after because I just wanted to chill and hang with chester in the morning.\n\nGood gym session, breakfast and now time to keep cleaning."
     }
   },
-  "updated": 1795828749338
+  "updated": 1795828763393
 }
