@@ -942,6 +942,14 @@
           "kcal": 220,
           "n": {},
           "quick": 1
+        },
+        {
+          "id": "mwzq2a2cagci",
+          "name": "Mashed Potatoes",
+          "amt": 110,
+          "unit": "g",
+          "kcal": 125.78188679245282,
+          "n": {}
         }
       ],
       "ex": [
@@ -956,5 +964,5 @@
       "note": "Slept in a bit till 5:30 but didn't go to the gym for a bit after because I just wanted to chill and hang with chester in the morning.\n\nGood gym session, breakfast and now time to keep cleaning."
     }
   },
-  "updated": 1795827769032
+  "updated": 1795828737396
 }
