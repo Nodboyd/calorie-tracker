@@ -933,6 +933,15 @@
           "unit": "cup",
           "kcal": 150,
           "n": {}
+        },
+        {
+          "id": "mwzphivclc4p",
+          "name": "mac and cheese",
+          "amt": 1,
+          "unit": "each",
+          "kcal": 220,
+          "n": {},
+          "quick": 1
         }
       ],
       "ex": [
@@ -947,5 +956,5 @@
       "note": "Slept in a bit till 5:30 but didn't go to the gym for a bit after because I just wanted to chill and hang with chester in the morning.\n\nGood gym session, breakfast and now time to keep cleaning."
     }
   },
-  "updated": 1795827539336
+  "updated": 1795827769032
 }
