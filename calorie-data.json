@@ -925,6 +925,14 @@
           "unit": "g",
           "kcal": 292.72875471698114,
           "n": {}
+        },
+        {
+          "id": "mwzpclmwuqv5",
+          "name": "Stove Top Turkey Stuffing",
+          "amt": 0.5,
+          "unit": "cup",
+          "kcal": 150,
+          "n": {}
         }
       ],
       "ex": [
@@ -939,5 +947,5 @@
       "note": "Slept in a bit till 5:30 but didn't go to the gym for a bit after because I just wanted to chill and hang with chester in the morning.\n\nGood gym session, breakfast and now time to keep cleaning."
     }
   },
-  "updated": 1795827364262
+  "updated": 1795827539336
 }
